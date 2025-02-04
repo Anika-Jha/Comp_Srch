@@ -14,12 +14,14 @@ Features
 
 Installation
 Prerequisites
-Ensure you have **Python 3.7+ installed. Then, set up a virtual environment:
+Ensure you have Python 3.7+ installed. Then, set up a virtual environment:
 
 sh
 python -m venv venv
-source venv/bin/activate  # macOS/Linux
-venv\Scripts\activate    # Windows
+source venv/bin/activate 
+# macOS/Linux
+venv\Scripts\activate   
+# Windows
 
 
 Install Dependencies
