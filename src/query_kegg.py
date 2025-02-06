@@ -21,7 +21,7 @@ def get_kegg_id(compound_name, synonyms=[]):
                         kegg_id = parts[0].replace("cpd:", "")  # Remove "cpd:" prefix
                         names = parts[1].split("; ")
 
-                        # Prioritize exact match
+                        # Prioritize exact match of the compound name or synonyms
                         if name.lower() in [n.lower() for n in names]:
                             return kegg_id
 
