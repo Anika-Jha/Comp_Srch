@@ -31,12 +31,13 @@ pip install -r requirements.txt
 
 Usage
 Running the CLI Tool
+
 sh
 python src/main.py
 
 Follow the prompts to input a **compound name, formula, or ID to search.
 
- Project Structure
+Project Structure
 
 Comp_Srch/
 │── data/                  # Store input & output Excel files  
