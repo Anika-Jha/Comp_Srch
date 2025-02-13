@@ -1,5 +1,5 @@
 import requests
-
+#KEGG base URL
 KEGG_BASE_URL = "https://rest.kegg.jp"
 
 def get_kegg_id(compound_name, synonyms=[]):
