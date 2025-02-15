@@ -1,7 +1,7 @@
 #import required modules
 import pandas as pd
 import os
-
+#output files
 EXCEL_FILE = "Comp_Srch_Results.xlsx"
 CSV_FILE = "Comp_Srch_Results.csv"
 
