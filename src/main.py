@@ -1,3 +1,4 @@
+#import mandatory modules
 import os
 from query_kegg import get_kegg_id
 from query_hmdb import get_hmdb_id
