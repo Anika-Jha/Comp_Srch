@@ -1,3 +1,4 @@
+#import necessary modules
 import requests
 from bs4 import BeautifulSoup
 #Base URL 
