@@ -4,7 +4,7 @@ import os
 #output files
 EXCEL_FILE = "Comp_Srch_Results.xlsx"
 CSV_FILE = "Comp_Srch_Results.csv"
-#function to save data as output file
+
 def save_to_excel(data, append=True):
     df = pd.DataFrame(data)
     
