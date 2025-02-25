@@ -1,3 +1,4 @@
+#import necessary modules
 import os
 import csv
 from query_kegg import get_kegg_id
