@@ -14,7 +14,7 @@ def process_compound(compound):
     """Process a single compound and return results."""
     result = {"Compound": compound}
 
-    # Fetch PubChem synonyms
+    # Fetch PubChem synonyms 
     synonyms = get_pubchem_synonyms(compound)
     if synonyms is None:
         synonyms = []  # Ensure synonyms is an empty list if None
@@ -28,7 +28,7 @@ def process_compound(compound):
     hmdb_id = get_hmdb_id(compound)
     result["HMDB ID"] = hmdb_id if hmdb_id else "Not Found"
 
-    # Fetch ChemSpider Data (fallback if KEGG and HMDB not found)
+    # Fetch ChemSpider Data
     if kegg_id == "Not Found" and hmdb_id == "Not Found":
         chemspider_data = get_chemspider_data(compound)
         result["ChemSpider Data"] = chemspider_data if chemspider_data else "Not Found"
