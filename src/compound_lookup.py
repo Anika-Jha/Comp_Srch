@@ -1,3 +1,4 @@
+#import necessary modueles
 from query_pubchem import get_pubchem_synonyms
 from query_chemspider import get_chemspider_data
 from query_hmdb import get_hmdb_id
@@ -13,7 +14,7 @@ def process_compound(compound_name):
     hmdb_id = get_hmdb_id(compound_name)
     kegg_id = get_kegg_id(compound_name)
 
-    # Ensure ChemSpider data is a dictionary before calling .get()
+   
     if not isinstance(chemspider_data, dict):
         chemspider_data = {"error": chemspider_data}  # Convert error message to dictionary format
 
