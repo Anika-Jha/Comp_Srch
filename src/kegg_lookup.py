@@ -1,3 +1,5 @@
+#to retrieve compound name from a given id
+#import necessary modules 
 import requests
 
 KEGG_BASE_URL = "https://rest.kegg.jp"
