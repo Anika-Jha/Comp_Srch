@@ -10,10 +10,9 @@ def get_pubchem_synonyms(compound_name):
     search_url = f"{PUBCHEM_BASE_URL}/compound/name/{compound_name}/synonyms/JSON"
 
     try:
-        # Send a GET request to PubChem
+       
         response = requests.get(search_url)
 
-        # Check if the request was successful (HTTP 200 OK)
         if response.status_code == 200:
             # Parse JSON response
             data = response.json()
