@@ -10,8 +10,9 @@ from process_data import save_to_excel, save_to_csv
 # Store all results in a list
 all_results = []
 
+# Process single compound and return result 
 def process_compound(compound):
-    """Process a single compound and return results."""
+    
     result = {"Compound": compound}
 
     # Fetch PubChem synonyms 
