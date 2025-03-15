@@ -64,3 +64,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+#HMDB query needs a backup as down mostly 
+#chemspider api should allow me 
+#implement pubchem as backup
