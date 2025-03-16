@@ -70,3 +70,4 @@ if __name__ == "__main__":
 #HMDB query needs a backup as down mostly 
 #chemspider api should allow me 
 #implement pubchem as backup
+#HMDB should have fast response time if not working 
