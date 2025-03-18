@@ -1,27 +1,28 @@
-#import necessary modules
 import requests
-from bs4 import BeautifulSoup
-#Base URL 
-HMDB_SEARCH_URL = "https://hmdb.ca/unearth/q"
-#function to get hmdb id
+
 def get_hmdb_id(compound_name):
-    """Search HMDB for the compound and return its HMDB ID."""
-    params = {
-        "utf8": "✓",
-        "query": compound_name,
-        "searcher": "metabolites"
-    }
+    """Search HMDB for a compound and return its HMDB ID."""
+    base_url = "https://hmdb.ca/unearth/q?searcher=metabolites&query="
+    search_url = f"{base_url}{compound_name}"
 
     try:
-        response = requests.get(HMDB_SEARCH_URL, params=params)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, "html.parser")
-            result = soup.find("a", href=lambda href: href and "/metabolites/HMDB" in href)
+        response = requests.get(search_url, timeout=10)
+        print("🔍 HMDB Response Status:", response.status_code)  # Check HTTP status
+        print("🔍 HMDB Response Text:", response.text[:500])  # Print first 500 chars of response
 
-            if result:
-                return result.text.strip()  # Extracts HMDB ID (e.g., HMDB0000122)
-        
+        if response.status_code != 200:
+            print("❌ Error fetching HMDB data. Status code:", response.status_code)
+            return None
+
+        # Parse HMDB response here (depends on their HTML/JSON structure)
+        # Example: extract HMDB ID from response
+        if "metabolite_id=" in response.text:
+            start_idx = response.text.find("metabolite_id=") + len("metabolite_id=")
+            end_idx = response.text.find("\"", start_idx)
+            return response.text[start_idx:end_idx]
+
         return None
+
     except requests.RequestException as e:
-        print(f"Error fetching HMDB data: {e}")
+        print(f"❌ Error fetching HMDB data: {e}")
         return None
