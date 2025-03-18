@@ -1,10 +1,9 @@
-#to retrieve compound name from a given id
-#import necessary modules 
 import requests
 
 KEGG_BASE_URL = "https://rest.kegg.jp"
 
 def reverse_lookup_kegg(kegg_id):
+    """Retrieve compound information from KEGG using KEGG ID."""
     lookup_url = f"{KEGG_BASE_URL}/get/{kegg_id}"
     try:
         response = requests.get(lookup_url)
