@@ -1,10 +1,9 @@
 import requests
-#KEGG base URL
+
 KEGG_BASE_URL = "https://rest.kegg.jp"
 
-#Search KEGG for the compound and return its KEGG ID. If not found, retry with synonyms.
 def get_kegg_id(compound_name, synonyms=[]):
-    
+    """Search KEGG for the compound and return its KEGG ID. If not found, retry with synonyms."""
     
     def search_kegg(name):
         """Helper function to query KEGG and extract the KEGG ID."""
