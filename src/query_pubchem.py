@@ -1,3 +1,4 @@
+#pubchem synonyms,cid and CAS ID
 
 import requests
 import re
