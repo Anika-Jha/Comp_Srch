@@ -43,6 +43,7 @@ def process_batch(file_path):
 
 def main():
     while True:
+        #menu 
         print("\n🔹 **Compound Search Tool** 🔹")
         print("1️⃣ Enter compound names manually")
         print("2️⃣ Upload CSV file for batch processing")
@@ -51,6 +52,7 @@ def main():
         print("5️⃣ Exit")
 
         choice = input("Enter your choice (1/2/3/4/5): ").strip()
+        #manually enter
 
         if choice == "1":
             compound_names = input("Enter compound names (use semicolon `;` to separate multiple names): ").split(';')
@@ -62,6 +64,7 @@ def main():
                     save_to_excel(result)
                     log_processed_compound(compound)
                     print("🔍 Search Result:", result)
+        #csv file , modify 'Compound Name' as header for column with compound names
 
         elif choice == "2":
             file_path = input("📂 Enter the path to your CSV file: ").strip()
@@ -88,3 +91,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+#implement metabolic weight
+#create ui 
