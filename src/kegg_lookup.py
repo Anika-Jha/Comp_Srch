@@ -8,7 +8,7 @@ def reverse_lookup_kegg(kegg_id):
     try:
         response = requests.get(lookup_url)
         if response.status_code != 200:
-            print(f"❌ Error: KEGG ID {kegg_id} not found.")
+            print(f" Error: KEGG ID {kegg_id} not found.")
             return None
 
         lines = response.text.split("\n")
@@ -27,5 +27,5 @@ def reverse_lookup_kegg(kegg_id):
         return compound_info
 
     except requests.RequestException as e:
-        print(f"❌ Error fetching KEGG data: {e}")
+        print(f" Error fetching KEGG data: {e}")
         return None
