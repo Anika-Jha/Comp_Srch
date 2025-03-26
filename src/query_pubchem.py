@@ -1,7 +1,7 @@
-#pubchem synonyms,cid and CAS ID
 
 import requests
 import re
+import json
 
 PUBCHEM_BASE_URL = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
 
@@ -46,13 +46,17 @@ def get_pubchem_data(compound_name):
         return result
 
 def get_pubchem_hmdb_id(cid):
-    """Extract HMDB ID from PubChem's Compound Summary if available."""
-    url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cid}/JSON"
-    
+    """Extract HMDB ID from PubChem's Compound Summary if available, with debugging."""
+    url = f"{PUBCHEM_BASE_URL}/pug_view/data/compound/{cid}/JSON"
+
     try:
         response = requests.get(url, timeout=15)
         if response.status_code == 200:
             data = response.json()
+
+            # DEBUG: Print full API response to check for HMDB data
+            print(f"🔍 DEBUG: Full PubChem response for CID {cid}:")
+            print(json.dumps(data, indent=2))
 
             # Traverse nested sections to find HMDB ID
             sections = data.get("Record", {}).get("Section", [])
@@ -65,6 +69,7 @@ def get_pubchem_hmdb_id(cid):
                                     hmdb_ids = external.get("Value", {}).get("StringWithMarkup", [])
                                     if hmdb_ids:
                                         return hmdb_ids[0].get("String")
+
         return None
     except Exception as e:
         print(f"⚠️ Failed to fetch HMDB from PubChem: {e}")
