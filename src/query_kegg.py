@@ -46,4 +46,22 @@ def get_kegg_id(compound_name, synonyms=[]):
         if kegg_id:
             return kegg_id
 
+def get_hmdb_from_kegg(kegg_id):
+    """Retrieve HMDB ID from KEGG database using KEGG ID."""
+    search_url = f"{KEGG_BASE_URL}/link/hmdb/cpd:{kegg_id}"
+
+    try:
+        response = requests.get(search_url)
+        if response.status_code == 200:
+            lines = response.text.strip().split("\n")
+            for line in lines:
+                parts = line.split("\t")
+                if len(parts) == 2 and "hmdb:" in parts[1]:
+                    return parts[1].replace("hmdb:", "")  # Extract HMDB ID
+
+        return None  # No HMDB ID found in KEGG
+    except requests.RequestException as e:
+        print(f"❌ Error fetching HMDB from KEGG: {e}")
+        return None
+
     return None  # No KEGG ID found even after retrying synonyms
