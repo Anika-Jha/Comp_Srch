@@ -1,9 +1,9 @@
 import requests
 
-METABOANALYST_API_URL = "https://rest.xialab.ca/api/mapcompounds"
+METABOANALYST_API_URL = "https://rest.xialab.ca/api/mapcompounds" #re-check for selenium
 
 def get_hmdb_from_metaboanalyst(compound_name):
-    """Fetch HMDB ID for a given compound using MetaboAnalyst API."""
+    #Fetch HMDB ID for a given compound using MetaboAnalyst API.
     headers = {'Content-Type': "application/json"}
     payload = {"queryList": compound_name, "inputType": "name"}
 
