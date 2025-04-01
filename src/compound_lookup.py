@@ -1,4 +1,4 @@
-
+#import required modules
 from query_pubchem import get_pubchem_data, get_pubchem_hmdb_id
 from query_hmdb import get_hmdb_id
 from query_kegg import get_kegg_id, get_hmdb_from_kegg
@@ -7,14 +7,14 @@ from query_cts import get_hmdb_id_from_cts
 from metaboanalyst_scraper import get_hmdb_from_metaboanalyst
 
 def process_compound(compound_name):
-    """Fetch all available data for a given compound."""
+    #Fetch all available data for a given compound.
     print(f"🔍 Processing {compound_name}...")
 
     pubchem = get_pubchem_data(compound_name)
     synonyms = pubchem.get("synonyms", [])
     cid = pubchem.get("cid")
     cas = pubchem.get("cas")
-
+    # HMDB 
     # Try HMDB from the main query first
     hmdb_id = get_hmdb_id(compound_name)
 
