@@ -1,6 +1,6 @@
 
 import requests
-
+#API
 CHEBI_SEARCH_URL = "https://www.ebi.ac.uk/webservices/chebi/2.0/test/getLiteEntity?search={}&maximumResults=1&entitySearchMode=ALL"
 CHEBI_ENTITY_URL = "https://www.ebi.ac.uk/webservices/chebi/2.0/test/getCompleteEntity?chebiId={}"
 
