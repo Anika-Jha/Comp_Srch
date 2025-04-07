@@ -40,7 +40,7 @@ def get_hmdb_id(compound_name):
     print("❌ HMDB ID: Failed after retries")
     return "Failed after retries"
 
-
+#reverse
 def get_compound_name_from_hmdb(hmdb_id):
     """Reverse lookup: get compound name from HMDB ID."""
     url = f"https://hmdb.ca/metabolites/{hmdb_id}"
