@@ -1,3 +1,4 @@
+#HMDB id and reverse lookback
 import requests
 import time
 from urllib.parse import quote
