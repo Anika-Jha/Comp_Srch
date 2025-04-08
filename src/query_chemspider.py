@@ -4,7 +4,7 @@ CHEMSPIDER_API_KEY = "YOUR_CHEMSPIDER_API_KEY"
 CHEMSPIDER_URL = "https://api.rsc.org/compounds/v1"
 
 def get_chemspider_data(compound_name):
-    """Fetch ChemSpider data using the API."""
+    
     headers = {
         "apikey": CHEMSPIDER_API_KEY,
         "Content-Type": "application/json"
