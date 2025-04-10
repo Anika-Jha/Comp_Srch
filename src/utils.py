@@ -6,8 +6,8 @@ def clean_compound_names(compound_list):
     cleaned_list = []
 
     for name in compound_list:
-        name = name.strip()  # Remove leading/trailing spaces
-        name = re.sub(r"\s+", " ", name)  # Replace multiple spaces with a single space
+        name = name.strip()  
+        name = re.sub(r"\s+", " ", name)  
 
         if name.lower() not in cleaned_set:  # Case-insensitive duplicate removal
             cleaned_set.add(name.lower())  
