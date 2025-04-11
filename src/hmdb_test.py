@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import re
 
 def get_hmdb_id(compound_name):
-    """Fetch HMDB ID for a compound with HTML parsing (forward lookup)."""
+    #Fetch HMDB ID for a compound with HTML parsing (forward lookup).
     
     # Clean compound name: remove parentheses, normalize whitespace
     formatted_name = re.sub(r"[()]", "", compound_name).strip()
