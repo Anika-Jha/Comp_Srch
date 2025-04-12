@@ -18,13 +18,13 @@ def get_chemspider_data(compound_name):
         if response.status_code == 200:
             data = response.json()
             if "results" in data and data["results"]:
-                return {"chemspider_id": data["results"][0]}  # ✅ Always return a dictionary
+                return {"chemspider_id": data["results"][0]}  
             else:
-                return {"error": "⚠️ No ChemSpider data found!"}  # ✅ Return dictionary, not string
+                return {"error": "⚠️ No ChemSpider data found!"} 
         elif response.status_code == 403:
-            return {"error": "❌ ChemSpider API key may be invalid or blocked!"}  # ✅ Dictionary format
+            return {"error": "❌ ChemSpider API key may be invalid or blocked!"}  
         else:
-            return {"error": f"❌ Error: {response.status_code}, {response.text}"}  # ✅ Dictionary format
+            return {"error": f"❌ Error: {response.status_code}, {response.text}"}  
 
     except requests.RequestException as e:
-        return {"error": f"❌ ChemSpider request failed: {e}"}  # ✅ Dictionary format
+        return {"error": f"❌ ChemSpider request failed: {e}"} 
