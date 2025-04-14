@@ -1,5 +1,5 @@
 import requests
-
+#url
 METABOANALYST_API_URL = "https://rest.xialab.ca/api/mapcompounds"
 
 def get_hmdb_from_metaboanalyst(compound_name):
@@ -23,7 +23,7 @@ def get_hmdb_from_metaboanalyst(compound_name):
         print(f"❌ Error fetching HMDB from MetaboAnalyst API: {e}")
         return None
 
-# Example Usage
+
 if __name__ == "__main__":
     compound = "glucose"
     hmdb_id = get_hmdb_from_metaboanalyst(compound)
