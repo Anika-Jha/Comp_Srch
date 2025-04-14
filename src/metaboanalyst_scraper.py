@@ -1,5 +1,5 @@
 import requests
-
+# api url
 METABOANALYST_API_URL = "https://rest.xialab.ca/api/mapcompounds" #re-check for selenium
 
 def get_hmdb_from_metaboanalyst(compound_name):
