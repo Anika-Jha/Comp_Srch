@@ -8,8 +8,7 @@ Features
 - Retrieve KEGG IDs, HMDB IDs, CAS Numbers, and other relevant details
 - Extract synonyms from PubChem to improve search accuracy
 - Handle batch processing for large datasets
-- Log errors in Excel, specifying the exact compound causing the issue
-- Provide a CLI interface for quick searches
+- Currently a CLI interface for quick searches
 - Future enhancements: Web-based UI, improved error handling, and additional database support
 
 Installation
