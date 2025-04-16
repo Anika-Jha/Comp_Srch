@@ -9,7 +9,7 @@ Features
 - Extract synonyms from PubChem to improve search accuracy
 - Handle batch processing for large datasets
 - Currently a CLI interface for quick searches
-- Future enhancements: Web-based UI, improved error handling, and additional database support
+
 
 Installation
 Prerequisites
