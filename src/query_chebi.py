@@ -5,7 +5,7 @@ CHEBI_SEARCH_URL = "https://www.ebi.ac.uk/webservices/chebi/2.0/test/getLiteEnti
 CHEBI_ENTITY_URL = "https://www.ebi.ac.uk/webservices/chebi/2.0/test/getCompleteEntity?chebiId={}"
 
 def get_chebi_hmdb_id(compound_name):
-    """Fetch HMDB ID for a compound using ChEBI API, with full response logging."""
+   
     
     search_url = CHEBI_SEARCH_URL.format(compound_name)
     
