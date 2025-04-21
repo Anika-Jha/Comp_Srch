@@ -2,7 +2,7 @@ import requests
 
 def get_hmdb_id_from_cts(compound_name):
     
-    # Retrieve the HMDB ID for a given compound name using the CTS API.
+   
     
     base_url = 'https://cts.fiehnlab.ucdavis.edu/rest/convert'
     params = {
