@@ -9,7 +9,7 @@ def clean_compound_names(compound_list):
         name = name.strip()  
         name = re.sub(r"\s+", " ", name)  
 
-        if name.lower() not in cleaned_set:  # Case-insensitive duplicate removal
+        if name.lower() not in cleaned_set:  
             cleaned_set.add(name.lower())  
             cleaned_list.append(name)  
 
