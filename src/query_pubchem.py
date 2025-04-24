@@ -1,8 +1,8 @@
-
+#necessary imports
 import requests
 import re
 import json
-
+#api 
 PUBCHEM_BASE_URL = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
 
 def get_pubchem_data(compound_name):
