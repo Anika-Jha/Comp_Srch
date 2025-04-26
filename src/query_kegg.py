@@ -3,7 +3,7 @@ import requests
 KEGG_BASE_URL = "https://rest.kegg.jp"
 
 def get_kegg_id(compound_name, synonyms=[]):
-    """Search KEGG for the compound and return its KEGG ID. If not found, retry with synonyms."""
+    #Search KEGG for the compound and return its KEGG ID. If not found, retry with synonyms.
     
     def search_kegg(name):
         """Helper function to query KEGG and extract the KEGG ID."""
@@ -15,7 +15,7 @@ def get_kegg_id(compound_name, synonyms=[]):
                 if lines:
                     for line in lines:
                         parts = line.split("\t")
-                        if len(parts) < 2:  # 🛑 Avoid IndexError if KEGG response is incomplete
+                        if len(parts) < 2:  
                             continue  
                         
                         kegg_id = parts[0].replace("cpd:", "")  # Remove "cpd:" prefix
