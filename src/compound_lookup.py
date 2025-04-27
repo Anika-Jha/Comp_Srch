@@ -7,7 +7,7 @@ from query_cts import get_hmdb_id_from_cts
 from metaboanalyst_scraper import get_hmdb_from_metaboanalyst
 
 def process_compound(compound_name):
-    #Fetch all available data for a given compound.
+    
     print(f"🔍 Processing {compound_name}...")
 
     pubchem = get_pubchem_data(compound_name)
