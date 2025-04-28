@@ -11,10 +11,10 @@ def get_hmdb_id(compound_name):
         print("🔍 HMDB Response Text:", response.text[:500])  # Print first 500 chars of response
 
         if response.status_code != 200:
-            print("❌ Error fetching HMDB data. Status code:", response.status_code)
+            print("Error fetching HMDB data. Status code:", response.status_code)
             return None
 
-        # Parse HMDB response here (depends on their HTML/JSON structure)
+       
         # Example: extract HMDB ID from response
         if "metabolite_id=" in response.text:
             start_idx = response.text.find("metabolite_id=") + len("metabolite_id=")
