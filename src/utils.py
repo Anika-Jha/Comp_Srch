@@ -2,7 +2,7 @@ import re
 
 def clean_compound_names(compound_list):
     """Cleans and removes duplicate compound names."""
-    cleaned_set = set()  # Use a set to store unique names
+    cleaned_set = set()  
     cleaned_list = []
 
     for name in compound_list:
