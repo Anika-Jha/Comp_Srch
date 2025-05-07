@@ -1,7 +1,7 @@
 import requests
 
 def get_hmdb_id(compound_name):
-    """Search HMDB for a compound and return its HMDB ID."""
+    
     base_url = "https://hmdb.ca/unearth/q?searcher=metabolites&query="
     search_url = f"{base_url}{compound_name}"
 
