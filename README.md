@@ -36,23 +36,6 @@ python src/main.py
 
 Follow the prompts to input a **compound name, formula, or ID to search.
 
-Project Structure
-
-Comp_Srch/
-│── data/                  # Store input & output Excel files  
-│── logs/                  # Store error logs  
-│── src/                   
-│   │── main.py            # Entry point for the CLI tool  
-│   │── query_kegg.py      # Handles KEGG API requests  
-│   │── query_hmdb.py      # Scrapes HMDB if needed  
-│   │── query_pubchem.py   # Retrieves synonyms & metadata  
-│   │── query_chemspider.py # Integrates ChemSpider  
-│   │── process_data.py    # Handles batch processing & error handling  
-│   │── utils.py           # Utility functions  
-│── requirements.txt       # List of dependencies  
-│── README.md              # Project documentation  
-│── config.json            # Store API keys & settings  
-
 
  Contributing
 1. Fork the repository
