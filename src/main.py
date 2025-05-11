@@ -1,4 +1,4 @@
-#import necessary modules 
+
 import os
 import pandas as pd
 from process_data import save_to_csv, save_to_excel, log_processed_compound, get_processed_compounds
@@ -7,13 +7,14 @@ from kegg_lookup import reverse_lookup_kegg
 from query_pubchem import get_pubchem_data
 
 def process_batch(file_path):
-   
+    """Process a CSV file with compound names, skipping already completed ones."""
     if not os.path.exists(file_path):
         print("❌ File not found!")
         return
 
     processed_compounds = get_processed_compounds()
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, encoding="ISO-8859-1")
+
     if "Compound Name" not in df.columns:
         print("❌ Error: CSV must contain a 'Compound Name' column.")
         return
