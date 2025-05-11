@@ -3,65 +3,66 @@ import requests
 KEGG_BASE_URL = "https://rest.kegg.jp"
 
 def get_kegg_id(compound_name, synonyms=[]):
-    #Search KEGG for the compound and return its KEGG ID. If not found, retry with synonyms.
-    
+    """
+    Search KEGG for the compound and return its KEGG ID using exact match only.
+    If not found, retry with synonyms.
+    """
+
     def search_kegg(name):
-        """Helper function to query KEGG and extract the KEGG ID."""
+        """Query KEGG and return KEGG ID only on exact name match."""
         search_url = f"{KEGG_BASE_URL}/find/compound/{name}"
         try:
-            response = requests.get(search_url)
+            response = requests.get(search_url, timeout=10)
             if response.status_code == 200:
                 lines = response.text.strip().split("\n")
-                if lines:
-                    for line in lines:
-                        parts = line.split("\t")
-                        if len(parts) < 2:  
-                            continue  
-                        
-                        kegg_id = parts[0].replace("cpd:", "")  # Remove "cpd:" prefix
-                        names = parts[1].split("; ")
+                for line in lines:
+                    parts = line.split("\t")
+                    if len(parts) < 2:
+                        continue
 
-                        # Prioritize exact match of the compound name or synonyms
-                        if name.lower() in [n.lower() for n in names]:
-                            return kegg_id
+                    kegg_id = parts[0].replace("cpd:", "")
+                    names = [n.strip() for n in parts[1].split(";")]
 
-                    # If no exact match, return first result (if available)
-                    if lines:
-                        return lines[0].split("\t")[0].replace("cpd:", "")
+                    # ✅ Only accept exact (case-insensitive) matches
+                    if any(name.lower() == n.lower() for n in names):
+                        return kegg_id
 
             return None
         except requests.RequestException as e:
             print(f"❌ Error fetching KEGG data: {e}")
             return None
 
-    # 1️⃣ First, try with the original compound name
+    # Try original compound name
     kegg_id = search_kegg(compound_name)
     if kegg_id:
         return kegg_id
 
-    # 2️⃣ If not found, retry with synonyms
+    # Retry with synonyms
     for synonym in synonyms:
         print(f"🔄 Retrying KEGG search with synonym: {synonym}")
         kegg_id = search_kegg(synonym)
         if kegg_id:
             return kegg_id
 
+    return None  # No match found
+
+
 def get_hmdb_from_kegg(kegg_id):
-    """Retrieve HMDB ID from KEGG database using KEGG ID."""
+    """
+    Retrieve HMDB ID from KEGG database using a KEGG compound ID.
+    """
     search_url = f"{KEGG_BASE_URL}/link/hmdb/cpd:{kegg_id}"
 
     try:
-        response = requests.get(search_url)
+        response = requests.get(search_url, timeout=10)
         if response.status_code == 200:
             lines = response.text.strip().split("\n")
             for line in lines:
                 parts = line.split("\t")
                 if len(parts) == 2 and "hmdb:" in parts[1]:
-                    return parts[1].replace("hmdb:", "")  # Extract HMDB ID
+                    return parts[1].replace("hmdb:", "")  # Extract clean HMDB ID
 
-        return None  # No HMDB ID found in KEGG
+        return None  # No HMDB cross-reference found
     except requests.RequestException as e:
         print(f"❌ Error fetching HMDB from KEGG: {e}")
         return None
-
-    return None  # No KEGG ID found even after retrying synonyms
