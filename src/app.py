@@ -105,4 +105,4 @@ elif option == "📄 FAQ":
 
 # ---- Footer ----
 st.markdown("---")
-st.markdown("🔬 Built with ❤️ for scientific research")
+st.markdown("--")
