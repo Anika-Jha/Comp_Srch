@@ -7,6 +7,7 @@ from query_kegg import get_kegg_id, get_hmdb_from_kegg
 from query_chebi import get_chebi_hmdb_id
 from query_cts import get_hmdb_id_from_cts
 from metaboanalyst_scraper import get_hmdb_from_metaboanalyst
+from hmdb_test import get_hmdb_id
 
 def get_hmdb_id(compound_name):
     """Fetch HMDB ID for a compound with HTML parsing."""
