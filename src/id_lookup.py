@@ -7,16 +7,30 @@ def lookup_pubchem_by_cid(cid: str) -> dict:
     response = requests.get(url)
     if response.status_code != 200:
         return {"error": "Invalid PubChem CID or not found."}
-    
+
     data = response.json()
-    info = data.get("PC_Compounds", [{}])[0]
-    props = {
+    props = data.get("PC_Compounds", [{}])[0].get("props", [])
+
+    result = {
         "CID": cid,
-        "IUPAC Name": info.get("props", [{}])[0].get("value", {}).get("sval", "N/A"),
-        "Molecular Formula": info.get("props", [{}])[1].get("value", {}).get("sval", "N/A"),
-        "Molecular Weight": info.get("props", [{}])[2].get("value", {}).get("fval", "N/A")
+        "IUPAC Name": "N/A",
+        "Molecular Formula": "N/A",
+        "Molecular Weight": "N/A"
     }
-    return props
+
+    for prop in props:
+        urn = prop.get("urn", {})
+        label = urn.get("label", "").lower()
+        name = urn.get("name", "").lower()
+
+        if label == "iupac name" and name == "systematic":
+            result["IUPAC Name"] = prop.get("value", {}).get("sval", "N/A")
+        elif label == "molecular formula":
+            result["Molecular Formula"] = prop.get("value", {}).get("sval", "N/A")
+        elif label == "molecular weight":
+            result["Molecular Weight"] = prop.get("value", {}).get("fval", "N/A")
+
+    return result
 
 def lookup_kegg_by_id(kegg_id: str) -> dict:
     url = f"http://rest.kegg.jp/get/{kegg_id}"
@@ -37,23 +51,26 @@ def lookup_kegg_by_id(kegg_id: str) -> dict:
     return result
 
 def lookup_hmdb_by_id(hmdb_id):
+    url = f"https://hmdb.ca/metabolites/{hmdb_id}"
     try:
-        url = f"https://hmdb.ca/metabolites/{hmdb_id}"
-        response = requests.get(url)
-        response.raise_for_status()
+        response = requests.get(url, timeout=10)
+        if response.status_code != 200:
+            return {"source": "HMDB", "hmdb_id": hmdb_id, "name": "Not Found", "smiles": ""}
 
         soup = BeautifulSoup(response.text, "html.parser")
-        name_tag = soup.find("h1")
-        smiles_tag = soup.find("dt", string="SMILES")
-        smiles = smiles_tag.find_next_sibling("dd").text.strip() if smiles_tag else ""
+        header = soup.find("h1")
+        name = header.text.strip() if header else "Name Not Found"
 
-        name = name_tag.text.strip() if name_tag else ""
+        smiles_tag = soup.find("dt", string="SMILES")
+        smiles_value = smiles_tag.find_next_sibling("dd").text.strip() if smiles_tag else ""
 
         return {
             "source": "HMDB",
             "hmdb_id": hmdb_id,
             "name": name,
-            "smiles": smiles
+            "smiles": smiles_value
         }
     except Exception as e:
-        return {"error": str(e)}
+        print(f"❌ Error in HMDB lookup: {e}")
+        return {"source": "HMDB", "hmdb_id": hmdb_id, "name": "Error", "smiles": ""}
+
