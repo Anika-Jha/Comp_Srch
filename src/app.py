@@ -10,7 +10,7 @@ from id_lookup import lookup_pubchem_by_cid, lookup_kegg_by_id, lookup_hmdb_by_i
 import base64
 from io import BytesIO
 
-# ---- Custom Styling ----
+# ---- Custom Styling ---- dark theme
 st.markdown("""
     <style>
         body {
