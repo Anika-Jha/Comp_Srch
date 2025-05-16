@@ -1,7 +1,7 @@
 # id_lookup.py
 import requests
 from bs4 import BeautifulSoup
-
+#for pubchem
 def lookup_pubchem_by_cid(cid: str) -> dict:
     url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/JSON"
     response = requests.get(url)
@@ -17,7 +17,7 @@ def lookup_pubchem_by_cid(cid: str) -> dict:
         "Molecular Formula": "N/A",
         "Molecular Weight": "N/A"
     }
-
+#go through each 
     for prop in props:
         urn = prop.get("urn", {})
         label = urn.get("label", "").lower()
@@ -31,7 +31,7 @@ def lookup_pubchem_by_cid(cid: str) -> dict:
             result["Molecular Weight"] = prop.get("value", {}).get("fval", "N/A")
 
     return result
-
+#for kegg
 def lookup_kegg_by_id(kegg_id: str) -> dict:
     url = f"http://rest.kegg.jp/get/{kegg_id}"
     response = requests.get(url)
@@ -49,7 +49,7 @@ def lookup_kegg_by_id(kegg_id: str) -> dict:
             result["Exact Mass"] = line.split("EXACT_MASS")[1].strip()
     result["KEGG ID"] = kegg_id
     return result
-
+#for hmdb
 def lookup_hmdb_by_id(hmdb_id):
     url = f"https://hmdb.ca/metabolites/{hmdb_id}"
     try:
