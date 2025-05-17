@@ -4,13 +4,12 @@ from compound_lookup import process_compound
 from process_data import save_to_csv, save_to_excel
 from translator import translate_to_english
 from dossier import generate_dossier
-from id_lookup import lookup_pubchem_by_cid, lookup_kegg_by_id, lookup_hmdb_by_id
-#from rdkit import Chem
-#from rdkit.Chem import Draw
-import base64
-from io import BytesIO
+from rdkit import Chem
+from rdkit.Chem import Draw
 
-# ---- Custom Styling ---- dark theme
+# ------------------------- STYLING -------------------------
+st.set_page_config(page_title="Compound Search Tool", layout="centered")
+
 st.markdown("""
     <style>
         body {
@@ -25,36 +24,26 @@ st.markdown("""
         .stTextInput>div>div>input {
             color: #fafafa;
         }
+        .stDownloadButton {
+            margin-top: 10px;
+        }
     </style>
 """, unsafe_allow_html=True)
 
 st.title("🧪 Compound Search App")
-st.markdown("Search chemical compounds and retrieve PubChem, KEGG, HMDB, CAS identifiers, and structures.")
+st.markdown("Search compounds and retrieve PubChem, KEGG, HMDB, and CAS identifiers. Translate non-English names too!")
 
-# ---- Sidebar Navigation ----
+# ------------------------- SIDEBAR -------------------------
 st.sidebar.title("Navigation")
 option = st.sidebar.radio("Choose an option", (
-    "🔍 Search Compound", 
-    "📁 Upload CSV", 
-    "🔁 ID Lookup", 
+    "🔍 Search Compound",
+    "📁 Upload CSV",
+    "🔁 Reverse ID Lookup",   # <-- New
     "📄 FAQ"
 ))
 
-# ---- Structure Drawing Helper ----
-def render_structure(smiles):
-    mol = Chem.MolFromSmiles(smiles)
-    if mol:
-        img = Draw.MolToImage(mol, size=(300, 300))
-        buf = BytesIO()
-        img.save(buf, format="PNG")
-        st.image(buf.getvalue(), caption="Molecular Structure")
-        b64 = base64.b64encode(buf.getvalue()).decode()
-        href = f'<a href="data:image/png;base64,{b64}" download="structure.png">📥 Download Structure Image</a>'
-        st.markdown(href, unsafe_allow_html=True)
-    else:
-        st.warning("⚠️ Could not render structure.")
 
-# ---- 1. Manual Compound Search ----
+# ------------------------- 1. Manual Search -------------------------
 if option == "🔍 Search Compound":
     compound_input = st.text_input("Enter compound name (in any language):", "")
 
@@ -62,34 +51,52 @@ if option == "🔍 Search Compound":
         translated_name = translate_to_english(compound_input)
         st.write(f"🌐 Translated to English: `{translated_name}`")
 
-        with st.spinner("Processing..."):
-            result = process_compound(translated_name)
+        use_fuzzy = st.checkbox("Force fuzzy match for HMDB (⚠️ May return unrelated result)", value=False)
 
-        st.success("✅ Compound Processed!")
+        with st.spinner("🔍 Searching compound..."):
+            result = process_compound(translated_name, force_fuzzy=use_fuzzy)
+
+        st.success("✅ Search complete!")
         st.json(result)
 
-        if result.get("smiles"):
-            render_structure(result["smiles"])
+        # ----- Display Molecule Structure (if SMILES available) -----
+        if result.get("PubChem_Synonyms") != "Not Found":
+            from query_pubchem import get_smiles_from_cid
+            if result["PubChem_CID"] != "Not Found":
+                smiles = get_smiles_from_cid(result["PubChem_CID"])
+                if smiles:
+                    mol = Chem.MolFromSmiles(smiles)
+                    img = Draw.MolToImage(mol)
+                    st.image(img, caption="🧬 Molecular Structure (PubChem)", width=300)
+                    with open("structure.png", "wb") as f:
+                        img.save(f)
+                    with open("structure.png", "rb") as f:
+                        st.download_button("📥 Download Structure Image", f, file_name="structure.png")
 
         if st.button("🧾 Generate Dossier"):
-            dossier_text = generate_dossier(result)
+            dossier_text = generate_dossier(result["Compound"], {
+                "PubChem": result["PubChem_CID"],
+                "CAS": result["CAS_ID"],
+                "KEGG": result["KEGG_ID"],
+                "HMDB": result["HMDB_ID"]
+            }, result.get("PubChem_Synonyms", ""))
             st.download_button("📥 Download Dossier", dossier_text, file_name=f"{translated_name}_dossier.txt")
 
-# ---- 2. Batch Upload CSV ----
+# ------------------------- 2. Batch Upload -------------------------
 elif option == "📁 Upload CSV":
-    uploaded_file = st.file_uploader("Upload a CSV file with a 'Compound Name' column", type=["csv"])
+    uploaded_file = st.file_uploader("Upload a CSV with a 'Compound Name' column", type=["csv"])
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
         if "Compound Name" not in df.columns:
-            st.error("❌ CSV must contain a column named 'Compound Name'")
+            st.error("❌ The file must have a 'Compound Name' column.")
         else:
             results = []
-            progress = st.progress(0)
             total = len(df)
+            progress = st.progress(0)
 
             for i, compound in enumerate(df["Compound Name"].dropna()):
-                translated_name = translate_to_english(compound)
-                result = process_compound(translated_name)
+                translated = translate_to_english(compound)
+                result = process_compound(translated)
                 results.append(result)
                 progress.progress((i + 1) / total)
 
@@ -100,49 +107,52 @@ elif option == "📁 Upload CSV":
             st.success("✅ Batch processing complete!")
             st.dataframe(result_df)
 
-            csv_download = result_df.to_csv(index=False).encode("utf-8")
-            st.download_button("📥 Download Results CSV", csv_download, file_name="batch_results.csv")
+            st.download_button("📥 Download CSV", result_df.to_csv(index=False), file_name="batch_results.csv")
 
-# ---- 3. ID Lookup ----
-elif option == "🔁 ID Lookup":
-    lookup_type = st.selectbox("Select ID type", ("PubChem CID", "KEGG ID", "HMDB ID"))
-    query_id = st.text_input(f"Enter {lookup_type}:")
+# ------------------------- 3. Reverse ID Lookup -------------------------
+elif option == "🔁 Reverse ID Lookup":
+    from id_lookup import lookup_pubchem_by_cid, lookup_kegg_by_id, lookup_hmdb_by_id
 
-    if st.button("🔎 Lookup"):
-        with st.spinner("Fetching data..."):
-            result = None
-            if lookup_type == "PubChem CID":
-                result = lookup_pubchem_by_cid(query_id)
-            elif lookup_type == "KEGG ID":
-                result = lookup_kegg_by_id(query_id)
-            elif lookup_type == "HMDB ID":
-                result = lookup_hmdb_by_id(query_id)
+    st.markdown("### 🔁 Reverse Lookup by IDs")
 
-        if result:
-            st.success("✅ ID Lookup Successful!")
-            st.json(result)
-            if result.get("smiles"):
-                render_structure(result["smiles"])
-        else:
-            st.error("❌ Could not retrieve data for given ID.")
+    st.subheader("🔹 PubChem CID")
+    cid_input = st.text_input("Enter PubChem CID")
+    if cid_input and st.button("🔍 Lookup PubChem"):
+        result = lookup_pubchem_by_cid(cid_input)
+        st.json(result)
 
-# ---- 4. FAQ Section ----
+    st.subheader("🔹 KEGG Compound ID")
+    kegg_input = st.text_input("Enter KEGG ID (e.g., C00031)")
+    if kegg_input and st.button("🔍 Lookup KEGG"):
+        result = lookup_kegg_by_id(kegg_input)
+        st.json(result)
+
+    st.subheader("🔹 HMDB Metabolite ID")
+    hmdb_input = st.text_input("Enter HMDB ID (e.g., HMDB0000122)")
+    if hmdb_input and st.button("🔍 Lookup HMDB"):
+        result = lookup_hmdb_by_id(hmdb_input)
+        st.json(result)
+
+# ------------------------- 4. FAQ Section -------------------------
 elif option == "📄 FAQ":
-    with st.expander("💡 What databases does this app search?"):
-        st.write("PubChem, KEGG, HMDB. More like ChEBI and DrugBank coming soon!")
+    st.markdown("### ❓ Frequently Asked Questions")
 
-    with st.expander("🌍 Can I search in languages other than English?"):
-        st.write("Yes! Inputs are translated to English before lookup.")
+    with st.expander("💡 What databases does this app query?"):
+        st.write("This app queries PubChem, KEGG, and HMDB databases using APIs and web scraping.")
 
-    with st.expander("🧾 What is the 'Dossier' feature?"):
-        st.write("It generates a summary text report of the compound.")
+    with st.expander("🌍 Can I input compound names in other languages?"):
+        st.write("Yes, names are auto-translated to English using Google Translate before lookup.")
 
-    with st.expander("📦 Can I process multiple compounds?"):
-        st.write("Yes, using the batch upload feature.")
+    with st.expander("📎 What identifiers are returned?"):
+        st.write("PubChem CID, CAS ID, KEGG ID, HMDB ID, and synonyms.")
 
-    with st.expander("🧬 Coming soon:"):
-        st.write("- ChEBI / DrugBank lookup\n- Bioactivity scores\n- Toxicology insights")
+    with st.expander("📊 How does HMDB lookup work?"):
+        st.write("The HMDB search uses HTML parsing. Complex or long compound names may fail. If needed, enable fuzzy matching using the checkbox.")
 
-# ---- Footer ----
+    with st.expander("🧾 What is the dossier feature?"):
+        st.write("It generates a compact report summarizing IDs and synonyms of a compound.")
+
+
+# ------------------------- Footer -------------------------
 st.markdown("---")
-st.markdown("🔬 Built with ❤️ for scientific research")
+st.markdown("🔬 Built with ❤️ for scientific research and metabolomics.")
