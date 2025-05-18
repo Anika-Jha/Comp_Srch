@@ -6,6 +6,8 @@ from translator import translate_to_english
 from dossier import generate_dossier
 from rdkit import Chem
 from rdkit.Chem import Draw
+from id_lookup import lookup_pubchem_by_cid, lookup_kegg_by_id, lookup_hmdb_by_id
+import re
 
 # ------------------------- STYLING -------------------------
 st.set_page_config(page_title="Compound Search Tool", layout="centered")
@@ -38,10 +40,9 @@ st.sidebar.title("Navigation")
 option = st.sidebar.radio("Choose an option", (
     "🔍 Search Compound",
     "📁 Upload CSV",
-    "🔁 Reverse ID Lookup",   # <-- New
+    "🔁 Reverse ID Lookup",
     "📄 FAQ"
 ))
-
 
 # ------------------------- 1. Manual Search -------------------------
 if option == "🔍 Search Compound":
@@ -51,10 +52,24 @@ if option == "🔍 Search Compound":
         translated_name = translate_to_english(compound_input)
         st.write(f"🌐 Translated to English: `{translated_name}`")
 
-        use_fuzzy = st.checkbox("Force fuzzy match for HMDB (⚠️ May return unrelated result)", value=False)
+        st.info("⚠️ HMDB search uses fuzzy matching to handle long names. Closest match will be shown beside HMDB ID.")
 
-        with st.spinner("🔍 Searching compound..."):
-            result = process_compound(translated_name, force_fuzzy=use_fuzzy)
+        with st.spinner("🔍 Searching compound (with fuzzy matching)..."):
+            result = process_compound(translated_name, force_fuzzy=True)
+
+        # --- Format HMDB_ID nicely if fuzzy match available
+        hmdb_id = result.get("HMDB_ID", "")
+        hmdb_match = result.get("HMDB_Match", "")
+
+        if hmdb_id and hmdb_id != "Unavailable" and hmdb_match not in ["No match", "Timeout", "Failed", ""]:
+            match = re.search(r"for (.*?) \(HMDB", hmdb_match)
+            if match:
+                match_name = match.group(1).lower()
+                result["HMDB_ID"] = f"{hmdb_id} (closest match: {match_name})"
+
+        # Remove raw HMDB_Match & Source
+        result.pop("HMDB_Match", None)
+        result.pop("HMDB_Source", None)
 
         st.success("✅ Search complete!")
         st.json(result)
@@ -96,7 +111,19 @@ elif option == "📁 Upload CSV":
 
             for i, compound in enumerate(df["Compound Name"].dropna()):
                 translated = translate_to_english(compound)
-                result = process_compound(translated)
+                result = process_compound(translated, force_fuzzy=True)
+
+                # Apply same formatting for batch mode
+                hmdb_id = result.get("HMDB_ID", "")
+                hmdb_match = result.get("HMDB_Match", "")
+                if hmdb_id and hmdb_id != "Unavailable" and hmdb_match not in ["No match", "Timeout", "Failed", ""]:
+                    match = re.search(r"for (.*?) \(HMDB", hmdb_match)
+                    if match:
+                        match_name = match.group(1).lower()
+                        result["HMDB_ID"] = f"{hmdb_id} (closest match: {match_name})"
+                result.pop("HMDB_Match", None)
+                result.pop("HMDB_Source", None)
+
                 results.append(result)
                 progress.progress((i + 1) / total)
 
@@ -111,8 +138,6 @@ elif option == "📁 Upload CSV":
 
 # ------------------------- 3. Reverse ID Lookup -------------------------
 elif option == "🔁 Reverse ID Lookup":
-    from id_lookup import lookup_pubchem_by_cid, lookup_kegg_by_id, lookup_hmdb_by_id
-
     st.markdown("### 🔁 Reverse Lookup by IDs")
 
     st.subheader("🔹 PubChem CID")
@@ -147,11 +172,10 @@ elif option == "📄 FAQ":
         st.write("PubChem CID, CAS ID, KEGG ID, HMDB ID, and synonyms.")
 
     with st.expander("📊 How does HMDB lookup work?"):
-        st.write("The HMDB search uses HTML parsing. Complex or long compound names may fail. If needed, enable fuzzy matching using the checkbox.")
+        st.write("The HMDB search uses HTML parsing. Complex or long compound names may fail. If needed, fuzzy logic picks the nearest match.")
 
     with st.expander("🧾 What is the dossier feature?"):
         st.write("It generates a compact report summarizing IDs and synonyms of a compound.")
-
 
 # ------------------------- Footer -------------------------
 st.markdown("---")
