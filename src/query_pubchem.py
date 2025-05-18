@@ -74,3 +74,15 @@ def get_pubchem_hmdb_id(cid):
     except Exception as e:
         print(f"⚠️ Failed to fetch HMDB from PubChem: {e}")
         return None
+
+def get_smiles_from_cid(cid):
+    """Fetch SMILES string for a compound using PubChem CID."""
+    try:
+        url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/property/CanonicalSMILES/JSON"
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            return data["PropertyTable"]["Properties"][0]["CanonicalSMILES"]
+    except Exception as e:
+        print(f"❌ Error fetching SMILES from PubChem: {e}")
+    return ""
