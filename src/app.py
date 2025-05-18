@@ -58,14 +58,17 @@ if option == "🔍 Search Compound":
             result = process_compound(translated_name, force_fuzzy=True)
 
         # --- Format HMDB_ID nicely if fuzzy match available
+        # Format HMDB_ID field only if valid
         hmdb_id = result.get("HMDB_ID", "")
         hmdb_match = result.get("HMDB_Match", "")
 
         if hmdb_id and hmdb_id != "Unavailable" and hmdb_match not in ["No match", "Timeout", "Failed", ""]:
+            import re
             match = re.search(r"for (.*?) \(HMDB", hmdb_match)
             if match:
                 match_name = match.group(1).lower()
                 result["HMDB_ID"] = f"{hmdb_id} (closest match: {match_name})"
+
 
         # Remove raw HMDB_Match & Source
         result.pop("HMDB_Match", None)
