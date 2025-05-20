@@ -30,6 +30,24 @@ def process_batch(file_path):
     if not compounds_to_process:
         print("✅ All compounds already processed or invalid.")
         return
+    
+
+    cache = {}  # 🔁 Store already processed results
+    for compound in compounds_to_process:
+        normalized = compound.lower()
+        if normalized in cache:
+            result = cache[normalized]
+        else:
+            result = process_compound(compound)
+            cache[normalized] = result
+
+        if result:
+            save_to_csv(result)
+            save_to_excel(result)
+            log_processed_compound(compound)
+            #print(f"✅ Processed: {compound} (HMDB Source: {result.get('HMDB_Source', 'N/A')})")
+
+def main():
 
     for compound in compounds_to_process:
         result = process_compound(compound)
