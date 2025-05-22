@@ -45,7 +45,7 @@ if option == "🔍 Search Compound":
         with st.spinner("🔍 Processing compound..."):
             result = process_compound(compound_input)
 
-        col1, col2 = st.columns([1, 1])
+        col1, col2 = st.columns([1, 1]) #equal spacing for img and info
 
         with col1:
             st.subheader("🧬 Structure")
