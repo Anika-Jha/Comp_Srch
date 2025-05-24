@@ -1,4 +1,5 @@
 #for single compound search 
+#doc
 def generate_dossier(name, ids_dict, synonyms):
     lines = [
         f"🧪 Compound Dossier",
