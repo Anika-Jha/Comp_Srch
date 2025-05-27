@@ -4,7 +4,8 @@ import os
 
 #output files
 CSV_FILE = "Comp_Srch_Results.csv"
-EXCEL_FILE = "Comp_Srch_Results.xlsx"
+#output restricted to csv files
+# EXCEL_FILE = "Comp_Srch_Results.xlsx"
 
 def save_to_csv(data, append=True):
     df = pd.DataFrame([data] if isinstance(data, dict) else data)
