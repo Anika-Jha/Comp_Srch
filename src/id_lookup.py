@@ -2,6 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 #for pubchem
+
 def lookup_pubchem_by_cid(cid: str) -> dict:
     url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/JSON"
     response = requests.get(url)
@@ -17,7 +18,7 @@ def lookup_pubchem_by_cid(cid: str) -> dict:
         "Molecular Formula": "N/A",
         "Molecular Weight": "N/A"
     }
-#go through each 
+
     for prop in props:
         urn = prop.get("urn", {})
         label = urn.get("label", "").lower()
