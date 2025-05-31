@@ -1,4 +1,5 @@
-
+#imports
+#error handling and retries
 import requests
 import time
 
