@@ -5,7 +5,7 @@ from hmdb_test import get_hmdb_id
 from kegg_pathways import get_kegg_pathways
 import re
 
-# ✅ In-memory cache
+
 compound_cache = {}
 
 def process_compound(compound_name, force_fuzzy=True):
