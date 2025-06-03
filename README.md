@@ -1,5 +1,8 @@
 # Comp_Srch
 
+to be released as saas before / on 9th of july.
+
+
 Overview
 Comp_Srch is a CLI and web-based tool designed to retrieve compound information from multiple biochemical databases, including KEGG, HMDB, PubChem, and ChemSpider. The tool automates the process of searching for compound IDs, extracting synonyms, and cross-referencing data for enhanced accuracy.
 
