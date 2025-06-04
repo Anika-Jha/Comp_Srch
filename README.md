@@ -53,43 +53,13 @@ Follow the prompts to input a **compound name, formula, or ID to search.
 
 
 
+Support multiple modules
 
-#new file structure:
-Comp_Srch/
-│
-├── app.py                      # 🎯 Main Streamlit entry point
-├── requirements.txt            # 📦 All pip dependencies
-├── config.py                   # ⚙️ (Optional) Central config for keys, limits, etc.
-│
-├── session_manager.py          # 🧑‍💻 Manages hashed session IDs per user
-│
-├── data/                       # 📁 Static data & results
-│   ├── processed_compounds.csv
-│   └── compound_cache.json
-│
-├── modules/                    # 🧠 All business logic modules
-│   ├── __init__.py
-│   ├── compound_lookup.py
-│   ├── query_pubchem.py
-│   ├── query_kegg.py
-│   ├── query_cts.py
-│   ├── query_chebi.py
-│   ├── query_hmdb.py           # renamed from hmdb_test.py
-│   ├── translator.py
-│   ├── dossier.py
-│   ├── kegg_pathways.py
-│   ├── id_lookup.py
-│   └── utils.py
-│
-├── ui/                         # 🎨 UI components
-│   ├── components.py           # collapsibles, layout, headers
-│   ├── multilingual.py         # (if enabled)
-│   ├── styling.css             # custom dark/light theme
-│
-├── logs/                       # 📊 Usage logging or user activity
-│   └── usage.log
-│
-└── README.md                   # 📝 Project documentation
+Scale with features like reverse lookup, dossiers, translation, AI, billing, etc.
+
+Maintain organized code across UI, logic, and data layers
+
+
 
 
 
