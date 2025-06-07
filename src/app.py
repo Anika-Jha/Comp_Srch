@@ -156,4 +156,4 @@ elif option == "📄 FAQ":
 
 # ------------------------- FOOTER -------------------------
 st.markdown("---")
-st.caption("🔬 Built with ❤️ for bioinformatics, cheminformatics, and metabolomics.")
+st.caption(" Built  for bioinformatics, cheminformatics, and metabolomics.")
