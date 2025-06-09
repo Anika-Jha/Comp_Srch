@@ -79,6 +79,7 @@ if option == "🔍 Search Compound":
 
             if st.button("🧠 View Pathway Graph (AI)"):
                 st.info("Coming soon: pathway graphs, biological context, roles...")
+#pathway implementation 
                 # For later: visualize pathway using networkx/pyvis based on `get_kegg_pathways(kegg_id)`
 
 
