@@ -1,4 +1,3 @@
-#necessary imports 
 import streamlit as st
 import pandas as pd
 from io import BytesIO
@@ -46,7 +45,7 @@ if option == "🔍 Search Compound":
         with st.spinner("🔍 Processing compound..."):
             result = process_compound(compound_input)
 
-        col1, col2 = st.columns([1, 1]) #equal spacing for img and info
+        col1, col2 = st.columns([1, 1])
 
         with col1:
             st.subheader("🧬 Structure")
@@ -77,10 +76,22 @@ if option == "🔍 Search Compound":
                 )
                 st.download_button("📥 Download Dossier", dossier_text, file_name=f"{result['Compound']}_dossier.txt")
 
-            if st.button("🧠 View Pathway Graph (AI)"):
-                st.info("Coming soon: pathway graphs, biological context, roles...")
-#pathway implementation 
-                # For later: visualize pathway using networkx/pyvis based on `get_kegg_pathways(kegg_id)`
+        # ---------------- Pathway Suggestions from KEGG ----------------
+        if result.get("KEGG_ID") and result["KEGG_ID"] != "Unavailable":
+            st.markdown("### 🧬 KEGG Pathways")
+            with st.spinner("🔗 Fetching related pathways..."):
+                pathways = get_kegg_pathways(result["KEGG_ID"])
+
+            if pathways:
+                for path in pathways:
+                    col1, col2 = st.columns([0.8, 0.2])
+                    with col1:
+                        st.markdown(f"**{path['name']}**")
+                        st.markdown(f"<span style='color: gray; font-size: 0.85em;'>[{path['category']}]</span>", unsafe_allow_html=True)
+                    with col2:
+                        st.markdown(f"[🔗 View Diagram]({path['diagram_url']})", unsafe_allow_html=True)
+            else:
+                st.info("No KEGG pathways found.")
 
 
 # ------------------------- BATCH UPLOAD -------------------------
@@ -157,4 +168,4 @@ elif option == "📄 FAQ":
 
 # ------------------------- FOOTER -------------------------
 st.markdown("---")
-st.caption(" Built for bioinformatics, cheminformatics, and metabolomics.")
+st.caption("🔬 Built with ❤️ for bioinformatics, cheminformatics, and metabolomics.")
