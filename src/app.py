@@ -154,6 +154,9 @@ elif option == "🔁 Reverse ID Lookup":
 elif option == "📄 FAQ":
     st.markdown("### ❓ Frequently Asked Questions")
 
+    with st.expander("Problem with HMDB results?"):
+        st.write("Please refresh the page or re-run the app")
+
     with st.expander("💡 What databases are used?"):
         st.write("This app queries PubChem, KEGG, and HMDB. HMDB uses fuzzy logic and scraping.")
 
