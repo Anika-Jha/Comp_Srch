@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 from io import BytesIO
-from rdkit import Chem
-from rdkit.Chem import Draw
 
 from compound_lookup import process_compound
 from process_data import save_to_csv
@@ -52,14 +50,10 @@ if option == "🔍 Search Compound":
         with col1:
             st.subheader("🧬 Structure")
             if result.get("PubChem_CID") != "Not Found":
-                smiles = get_smiles_from_cid(result["PubChem_CID"])
-                if smiles:
-                    mol = Chem.MolFromSmiles(smiles)
-                    img = Draw.MolToImage(mol)
-                    st.image(img, caption="Structure", width=250)
-                    buf = BytesIO()
-                    img.save(buf, format="PNG")
-                    st.download_button("📥 Download Image", buf.getvalue(), file_name="structure.png")
+                cid = result["PubChem_CID"]
+                # Use PubChem REST API to get PNG image of compound
+                img_url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/PNG"
+                st.image(img_url, caption="Structure", width=400)
 
         with col2:
             st.subheader("📋 Compound Info")
@@ -77,6 +71,7 @@ if option == "🔍 Search Compound":
                     result.get("PubChem_Synonyms", "")
                 )
                 st.download_button("📥 Download Dossier", dossier_text, file_name=f"{result['Compound']}_dossier.txt")
+
 
         # ---------------- Pathway Suggestions from KEGG ----------------
         if result.get("KEGG_ID") and result["KEGG_ID"] != "Unavailable":
