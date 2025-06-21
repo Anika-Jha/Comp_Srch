@@ -1,70 +1,51 @@
-# Comp_Srch
+# 🧪 Comp_Srch Beta - Compound Search App
 
+Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compound search tool that lets you:
 
-Overview
-Comp_Srch is a CLI and web-based tool designed to retrieve compound information from multiple biochemical databases, including KEGG, HMDB,and PubChem. The tool automates the process of searching for compound IDs, extracting synonyms, and cross-referencing data for enhanced accuracy.
+- 🔍 Search compounds by name (any language)
+- 🧾 Get IDs: **PubChem, KEGG, HMDB, CAS**
+- 🧬 View molecular structures (PubChem-based)
+- 📦 Download batch results as CSV 
+- 🧠 See suggested KEGG pathways
+- 📊 View processing insights (accuracy, match info)
 
-single compound search - img and details
-batch processing, dossier , download dossier
-reverse lookup
+---
 
-Uses fuzzy logic for HMDB search.
+## 🚀 Getting Started (Beta Users)
 
-Features
-- Query KEGG, HMDB, PubChem, and ChemSpider for compound information
-- Retrieve KEGG IDs, HMDB IDs, CAS Numbers,Pubchem id and other relevant details
-- Extract synonyms from PubChem to improve search accuracy
-- Handle batch processing for large datasets
-- Currently a CLI interface for quick searches
+1. Visit the deployed beta link:  
+   👉 **[https://your-beta-link.streamlit.app](#)**
 
+2. Select from:
+   - 🔍 Search single compound
+   - 📁 Upload CSV for batch processing- make sure the name for column of your csv is "Compound Name"
+   - 🔁 Reverse ID lookup (KEGG / HMDB / PubChem)
+   - 🧠 Insights and Stats
 
-Installation
-Prerequisites
-Ensure you have Python 3.7+ installed. Then, set up a virtual environment:
+---
 
-sh
-python -m venv venv
-source venv/bin/activate 
-# macOS/Linux
-venv\Scripts\activate   
-# Windows
+## 🛠 Technologies Used
+- Python
+- Streamlit
+- PubChem, KEGG, HMDB API/scraping
+- RDKit (structure rendering)
 
+---
 
-Install Dependencies
+## 🧪 Known Issues (Beta)
+- HMDB may timeout for long or rare compound names
+- Translation fallback may fail if rate-limited
+- KEGG sometimes returns approximate matches
+- Pathway suggestions are based only on KEGG data for now
 
-pip install -r requirements.txt
+---
 
+## 💬 Feedback
+Found a bug or want to suggest a feature?
 
-Usage
-Running the CLI Tool
+Submit here 👉 [Feedback Form](https://forms.gle/your-feedback-link)
 
-sh
-python src/main.py
+Or open an issue on GitHub.
 
-Follow the prompts to input a **compound name, formula, or ID to search.
-
-
- Contributing
-1. Fork the repository
-2. Create a new branch (`feature-branch`)
-3. Commit your changes
-4. Push to your branch
-5. Submit a pull request
-
-
-
-Support multiple modules
-
-Scale with features like reverse lookup, dossiers, translation, AI, billing, etc.
-
-Maintain organized code across UI, logic, and data layers
-
-
-
-
-
-
-License
-MIT License
-
+---
 
