@@ -1,11 +1,10 @@
-#imports
 from query_pubchem import get_pubchem_data
 from query_kegg import get_kegg_id
 from hmdb_test import get_hmdb_id
 from kegg_pathways import get_kegg_pathways
 import re
 
-
+# ✅ In-memory cache to avoid reprocessing
 compound_cache = {}
 
 def process_compound(compound_name, force_fuzzy=True):
@@ -29,7 +28,7 @@ def process_compound(compound_name, force_fuzzy=True):
     # Step 3: HMDB
     hmdb_id, hmdb_match_name = get_hmdb_id(compound_name, force_fuzzy=True)
 
-    # Format HMDB_ID to include fuzzy name match (if valid)
+    # ✅ Clean fuzzy match formatting (if needed)
     if (
         hmdb_id
         and hmdb_id != "Unavailable"
@@ -49,7 +48,7 @@ def process_compound(compound_name, force_fuzzy=True):
         "KEGG_ID": kegg_id or "Unavailable",
     }
 
-    # Store in cache
+    # Cache it
     compound_cache[compound_name] = result
     return result
 
