@@ -43,7 +43,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
 ## 💬 Feedback
 Found a bug or want to suggest a feature?
 
-Submit here 👉 [Feedback Form](https://forms.gle/your-feedback-link)
+Submit here 👉 [Feedback Form](https://forms.gle/AX9v2hYXJpBf3pEd6)
 
 Or open an issue on GitHub.
 
