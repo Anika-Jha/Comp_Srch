@@ -226,3 +226,6 @@ elif option == "📄 FAQ":
 # ------------------------- FOOTER -------------------------
 st.markdown("---")
 st.caption("🔬 Built with ❤️ for bioinformatics, cheminformatics, and metabolomics.")
+st.sidebar.markdown("---")
+st.sidebar.subheader("💬 Beta Feedback")
+st.sidebar.markdown("Spotted an issue? Submit [here](https://forms.gle/AX9v2hYXJpBf3pEd6)")
