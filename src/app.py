@@ -11,6 +11,8 @@ from id_lookup import lookup_pubchem_by_cid, lookup_kegg_by_id, lookup_hmdb_by_i
 from query_pubchem import get_smiles_from_cid
 from kegg_pathways import get_kegg_pathways  # For future graph implementation
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 # ------------------------- CONFIG -------------------------
 st.set_page_config(page_title="COMP_SRCH", layout="wide")
 
@@ -94,41 +96,96 @@ if option == "🔍 Search Compound":
                 st.info("No KEGG pathways found.")
 
 
-# ------------------------- BATCH UPLOAD -------------------------
+# ------------------------- 2. Batch Upload -------------------------
 elif option == "📁 Upload CSV":
     uploaded_file = st.file_uploader("Upload a CSV with a 'Compound Name' column", type=["csv"])
+    
     if uploaded_file:
         try:
             df = pd.read_csv(uploaded_file)
         except Exception as e:
             st.error(f"❌ Error reading CSV: {e}")
-        else:
-            if "Compound Name" not in df.columns:
-                st.error("❌ The file must have a 'Compound Name' column.")
-            else:
-                results = []
-                cache = {}
-                total = len(df)
-                progress = st.progress(0)
+            st.stop()
 
-                for i, compound in enumerate(df["Compound Name"].dropna().unique()):
-                    compound = str(compound).strip()
-                    if compound not in cache:
-                        result = process_compound(compound)
-                        cache[compound] = result
-                    else:
-                        result = cache[compound]
-                    results.append(result)
+        if "Compound Name" not in df.columns:
+            st.error("❌ The file must have a 'Compound Name' column.")
+        else:
+            st.success("📥 File uploaded! Starting batch processing...")
+
+            compounds = df["Compound Name"].dropna().unique().tolist()
+            results = []
+            compound_cache = {}
+
+            progress = st.progress(0)
+            total = len(compounds)
+            import time
+            start_time = time.time()
+
+            def safe_process(comp):
+                try:
+                    if comp in compound_cache:
+                        return compound_cache[comp]
+                    retries = 2
+                    for attempt in range(retries + 1):
+                        try:
+                            result = process_compound(comp)
+                            compound_cache[comp] = result
+                            return result
+                        except Exception as e:
+                            if attempt == retries:
+                                return {"Compound": comp, "Error": str(e)}
+                except Exception as final_error:
+                    return {"Compound": comp, "Error": f"Unhandled error: {final_error}"}
+
+            from concurrent.futures import ThreadPoolExecutor, as_completed
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                futures = {executor.submit(safe_process, comp): comp for comp in compounds}
+                for i, future in enumerate(as_completed(futures)):
+                    results.append(future.result())
                     progress.progress((i + 1) / total)
 
-                result_df = pd.DataFrame(results)
-                st.success("✅ Batch processing complete!")
-                st.dataframe(result_df)
+            result_df = pd.DataFrame(results)
+            result_df.fillna("Not Found", inplace=True)
 
-                save_to_csv(results)
+            for col in result_df.columns:
+                result_df[col] = result_df[col].astype(str)
 
-                csv_data = result_df.to_csv(index=False).encode("utf-8")
-                st.download_button("📥 Download CSV", csv_data, file_name="batch_results.csv")
+            # ---- Show results in UI
+            st.success("✅ Batch processing complete!")
+            st.dataframe(result_df)
+
+            # ---- Download buttons
+            csv = result_df.to_csv(index=False).encode("utf-8")
+            st.download_button("📥 Download CSV", csv, file_name="batch_results.csv")
+
+            #from io import BytesIO
+            #excel_buf = BytesIO()
+            #with pd.ExcelWriter(excel_buf, engine="xlsxwriter") as writer:
+            #    result_df.to_excel(writer, index=False, sheet_name="Results")
+            #st.download_button("📥 Download Excel", excel_buf.getvalue(), file_name="batch_results.xlsx")
+
+            # ----------------------- 📊 INSIGHTS -----------------------
+            st.markdown("---")
+            with st.expander("📊 View Insights"):
+                pubchem_success = sum(result["PubChem_CID"] != "Not Found" for result in results)
+                kegg_success = sum(result["KEGG_ID"] != "Unavailable" for result in results)
+                hmdb_success = sum("Unavailable" not in result["HMDB_ID"] for result in results)
+                hmdb_fail = total - hmdb_success
+
+                end_time = time.time()
+                duration = round(end_time - start_time, 2)
+
+                st.markdown(f"""
+                ✅ **Total Compounds Processed**: {total}  
+                🔬 **PubChem Success**: {pubchem_success}  
+                🧬 **KEGG Success**: {kegg_success}  
+                🧪 **HMDB Success**: {hmdb_success}  
+                ⚠️ **HMDB Timeout/Failures**: {hmdb_fail}  
+                ⏱️ **Total Processing Time**: {duration} seconds  
+                ⏱️ **Average per Compound**: {round(duration/total, 2)} seconds
+                """)
+
+                st.info("HMDB issues are usually due to network timeouts or HTML parsing errors for long compound names.")
 
 # ------------------------- REVERSE LOOKUP -------------------------
 elif option == "🔁 Reverse ID Lookup":
@@ -153,9 +210,6 @@ elif option == "🔁 Reverse ID Lookup":
 # ------------------------- FAQ -------------------------
 elif option == "📄 FAQ":
     st.markdown("### ❓ Frequently Asked Questions")
-
-    with st.expander("Problem with HMDB results?"):
-        st.write("Please refresh the page or re-run the app")
 
     with st.expander("💡 What databases are used?"):
         st.write("This app queries PubChem, KEGG, and HMDB. HMDB uses fuzzy logic and scraping.")
