@@ -1,22 +1,27 @@
-# Base image with Conda
-FROM continuumio/miniconda3
+# Use official Python image
+FROM python:3.10-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy your app files
-COPY . /app
+# Install system packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create the Conda environment and install all at once
-RUN conda create -n comp_srch_env python=3.10 -y && \
-    conda install -n comp_srch_env -c conda-forge rdkit -y && \
-    /opt/conda/envs/comp_srch_env/bin/pip install --no-cache-dir \
-        streamlit pandas==2.2.3 numpy==2.2.2 requests==2.32.3 \
-        beautifulsoup4==4.13.1 openpyxl==3.1.5 xlsxwriter \
-        googletrans==4.0.0rc1
+# Install pip packages
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Expose Streamlit's port
+# Copy your app
+COPY . .
+
+# Make sure streamlit is in PATH
+ENV PATH="/root/.local/bin:$PATH"
+
+# Expose the Streamlit default port
 EXPOSE 8501
 
-# Run the app by explicitly using the environment's streamlit path
-CMD ["/opt/conda/envs/comp_srch_env/bin/streamlit", "run", "src/app.py", "--server.port=8501", "--server.enableCORS=false"]
+# Run your Streamlit app
+CMD ["streamlit", "run", "src/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
