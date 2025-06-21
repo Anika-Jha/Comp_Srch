@@ -14,7 +14,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
 ## 🚀 Getting Started (Beta Users)
 
 1. Visit the deployed beta link:  
-   👉 **[https://your-beta-link.streamlit.app](#)**
+   👉 **[https://compsrch-aniadi259.streamlit.app/](#)**
 
 2. Select from:
    - 🔍 Search single compound
