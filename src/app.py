@@ -34,7 +34,7 @@ st.markdown("Search compounds and retrieve **PubChem, KEGG, HMDB, CAS identifier
 st.sidebar.title("Navigation")
 option = st.sidebar.radio("Choose an option", (
     "🔍 Search Compound",
-    "📁 Upload CSV",
+    "📁 Batch Processing",
     "🔁 Reverse ID Lookup",
     "📄 FAQ"
 ))
