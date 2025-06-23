@@ -97,7 +97,7 @@ if option == "🔍 Search Compound":
 
 
 # ------------------------- 2. Batch Upload -------------------------
-elif option == "📁 Upload CSV":
+elif option == "📁 Batch Processing":
     uploaded_file = st.file_uploader("Upload a CSV with a 'Compound Name' column", type=["csv"])
     
     if uploaded_file:
