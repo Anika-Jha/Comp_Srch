@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from io import BytesIO
-from rdkit import Chem
+from rdkit import Chem #to be removed and pubchem img search to be added
 from rdkit.Chem import Draw
 
 from compound_lookup import process_compound
