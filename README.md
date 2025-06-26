@@ -15,7 +15,6 @@ Features
 - Retrieve KEGG IDs, HMDB IDs, CAS Numbers,Pubchem id and other relevant details
 - Extract synonyms from PubChem to improve search accuracy
 - Handle batch processing for large datasets
-- Currently a CLI interface for quick searches
 
 
 Installation
