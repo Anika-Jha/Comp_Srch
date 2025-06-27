@@ -52,11 +52,7 @@ Follow the prompts to input a **compound name, formula, or ID to search.
 
 
 
-Support multiple modules
 
-Scale with features like reverse lookup, dossiers, translation, AI, billing, etc.
-
-Maintain organized code across UI, logic, and data layers
 
 
 
