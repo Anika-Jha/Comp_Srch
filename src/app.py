@@ -3,7 +3,7 @@ import pandas as pd
 from io import BytesIO
 from rdkit import Chem #to be removed and pubchem img search to be added
 from rdkit.Chem import Draw
-
+#file imports
 from compound_lookup import process_compound
 from process_data import save_to_csv
 from dossier import generate_dossier
