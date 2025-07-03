@@ -14,7 +14,7 @@ Features
 - Query KEGG, HMDB, PubChem, and ChemSpider for compound information
 - Retrieve KEGG IDs, HMDB IDs, CAS Numbers,Pubchem id and other relevant details
 - Extract synonyms from PubChem to improve search accuracy
-- Handle batch processing for large datasets
+- Handle batch processing for large datasets -> batch processing
 
 
 Installation
