@@ -1,8 +1,6 @@
 import requests
 
-def get_hmdb_id_from_cts(compound_name):
-    
-   
+def get_hmdb_id_from_cts(compound_name):  
     
     base_url = 'https://cts.fiehnlab.ucdavis.edu/rest/convert'
     params = {
@@ -14,7 +12,6 @@ def get_hmdb_id_from_cts(compound_name):
         response = requests.get(base_url, params=params)
         response.raise_for_status()
         data = response.json()
-        # Extract HMDB ID from the response
         if data and isinstance(data, list) and 'to' in data[0]:
             hmdb_id = data[0]['to']
             return hmdb_id
