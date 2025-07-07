@@ -256,7 +256,7 @@ elif option == "📁 Batch Processing":
                 """)
 
                 st.info("HMDB issues often result from timeouts or name-matching difficulties.")
-
+#check status
     with st.expander("📡 Check Database Status"):
         if st.button("🔎 Check Now", key="db_status_batch"):
             statuses = check_db_status()
@@ -303,7 +303,7 @@ elif option == "📄 FAQ":
         st.write("Yes, you can download single results or batch output as CSV.")
 
     with st.expander("📊 Will I get pathway suggestions?"):
-        st.write("This is coming soon! You'll get pathway networks and visualization for KEGG IDs.")
+        st.write("Yes! You’ll get pathway networks and visualization for KEGG IDs.")
 
 # ------------------------- FOOTER -------------------------
 st.markdown("---")
