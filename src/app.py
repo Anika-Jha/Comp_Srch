@@ -81,7 +81,7 @@ if option == "🏠 Home":
     - Retrieve IDs from PubChem, KEGG, HMDB, and CAS.
     - Explore KEGG pathways.
     - Perform batch searches from CSV files.
-    - Reverse-lookup IDs to get compound details.
+    - Reverse-lookup IDs(HMDB,KEGG,pubchem) to get compound details.
 
     ---
     """)
