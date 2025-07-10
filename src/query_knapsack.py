@@ -2,34 +2,38 @@
 import requests
 from bs4 import BeautifulSoup
 
-def search_knapsack_by_name(name):
-    """
-    Search KNApSAcK for a plant compound by name.
-    Returns a list of dictionaries.
-    """
-    url = f"https://www.knapsackfamily.com/knapsack_core/result.php?sname=name&word={name}"
+def search_knapsack(compound_name):
+    url = "https://knapsacksearch.kuaijie.tech/api/metabolites"
+    
     try:
-        resp = requests.get(url, timeout=10)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "html.parser")
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
 
-        tables = soup.find_all("table")
-        if len(tables) < 2:
-            return []
+        found = None
+        for compound in data:
+            knapsack_name = compound.get("Metabolite_Name", "")
+            if compound_name.lower() == knapsack_name.lower():
+                found = compound
+                break
 
-        rows = tables[1].find_all("tr")[1:]  # skip header
-
-        results = []
-        for row in rows:
-            cols = [td.text.strip() for td in row.find_all("td")]
-            if len(cols) >= 5:
-                results.append({
-                    "Metabolite ID": cols[0],
-                    "Name": cols[1],
-                    "Molecular Formula": cols[2],
-                    "Exact Mass": cols[3],
-                    "Species": cols[4]
-                })
-        return results
+        if found:
+            return {
+                "Compound": compound_name,
+                "KNApSAcK_ID": found.get("Metabolite_ID", ""),
+                "Species": found.get("Species", ""),
+                "Formula": found.get("Molecular_Formula", ""),
+                "Mass": found.get("Exact_Mass", ""),
+            }
+        else:
+            return {
+                "Compound": compound_name,
+                "Message": "No exact match found in KNApSAcK."
+            }
+        
     except Exception as e:
-        return [{"Error": str(e)}]
+        return {
+            "Compound": compound_name,
+            "Message": f"Error searching KNApSAcK: {str(e)}"
+        }
+
