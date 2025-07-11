@@ -161,7 +161,7 @@ if option == "🔍 Search Compound":
 
     # Add DB status check
     with st.expander("📡 Check Database Status"):
-        if st.button("🔎 Check Now", key="db_status_single"):
+        if st.button("🔎 Check Now", key="db_status_knapsack"):
             statuses = check_db_status()
             for status in statuses:
                 st.markdown(status)
@@ -256,7 +256,7 @@ elif option == "📁 Batch Processing":
                 """)
 
                 st.info("HMDB issues often result from timeouts or name-matching difficulties.")
-#check status
+
     with st.expander("📡 Check Database Status"):
         if st.button("🔎 Check Now", key="db_status_batch"):
             statuses = check_db_status()
