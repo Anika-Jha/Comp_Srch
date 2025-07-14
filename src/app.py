@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import requests
 from io import BytesIO
-#file imports
+
 from compound_lookup import process_compound
 from process_data import save_to_csv
 from dossier import generate_dossier
