@@ -6,7 +6,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
 - 🧾 Get IDs: **PubChem, KEGG, HMDB, CAS**
 - 🧬 View molecular structures (PubChem-based)
 - 📦 Download batch results as CSV 
-- 🧠 See suggested KEGG pathways
+- 🧠 See suggested KEGG pathways for available compounds
 - 📊 View processing insights (accuracy, match info)
 
 ---
