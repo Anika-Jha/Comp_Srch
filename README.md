@@ -28,7 +28,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
 - Python
 - Streamlit
 - PubChem, KEGG, HMDB API/scraping
-- RDKit (structure rendering)
+
 
 ---
 
