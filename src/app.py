@@ -297,7 +297,7 @@ elif option == "📄 FAQ":
         st.write("This app queries PubChem, KEGG, and HMDB. HMDB uses fuzzy logic and scraping.")
 
     with st.expander("🧪 How accurate is HMDB matching?"):
-        st.write("HMDB searches can fail for long compound names. We apply fuzzy logic to find closest match. It's displayed beside the HMDB ID.")
+        st.write("HMDB searches can fail for long compound names. We apply fuzzy logic to find closest match. The closest match searched is displayed beside the HMDB ID.")
 
     with st.expander("📥 Can I download results?"):
         st.write("Yes, you can download single results or batch output as CSV.")
