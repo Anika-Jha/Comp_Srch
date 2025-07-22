@@ -7,7 +7,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
 - 🧬 View molecular structures (PubChem-based)
 - 📦 Download batch results as CSV 
 - 🧠 See suggested KEGG pathways for available compounds
-- 📊 View processing insights (accuracy, match info)
+- 📊 View processing insights (accuracy, match info stats)
 
 ---
 
