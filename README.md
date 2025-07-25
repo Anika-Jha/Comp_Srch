@@ -18,7 +18,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
 
 2. Select from:
    - 🔍 Search single compound
-   - 📁 Upload CSV for batch processing- make sure the name for column of your csv is "Compound Name"
+   - 📁 Upload CSV for batch processing
    - 🔁 Reverse ID lookup (KEGG / HMDB / PubChem)
    - 🧠 Insights and Stats
 
