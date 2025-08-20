@@ -20,7 +20,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
    - 🔍 Search single compound
    - 📁 Upload CSV for batch processing
    - 🔁 Reverse ID lookup (KEGG / HMDB / PubChem)
-   - 🧠 Insights and Stats
+   - 🧠 Insights and Stats - for batch processing
 
 ---
 
