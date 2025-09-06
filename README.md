@@ -1,4 +1,4 @@
-# 🧪 Comp_Srch Beta - Compound ID Search App
+# 🧪 Comp_Srch Beta - Compound ID Search Web App
 
 Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compound search tool that lets you:
 
