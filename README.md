@@ -27,7 +27,7 @@ Welcome to the **beta version** of **Comp_Srch**, a streamlined chemical compoun
 ## 🛠 Technologies Used
 - Python
 - Streamlit
-- PubChem, KEGG, HMDB API/scraping
+- PubChem, KEGG, HMDB API, web scraping
 
 
 ---
