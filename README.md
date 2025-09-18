@@ -1,4 +1,4 @@
-# 🧪 Comp_Srch Beta: Compound ID Search Web App
+# Comp_Srch Beta: Compound ID Search Web App
 
 Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compound search tool that lets you:
 
@@ -14,7 +14,7 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 ##  Getting Started (Beta Users)
 
 1. Visit the deployed beta link:  
-   👉 **[https://compsrch-aniadi259.streamlit.app/](#)**
+    **[https://compsrch-aniadi259.streamlit.app/](#)**
 
 2. Select from:
    -  Search single compound
@@ -43,7 +43,7 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 ##  Feedback
 Found a bug or want to suggest a feature?
 
-Submit here 👉 [Feedback Form](https://forms.gle/AX9v2hYXJpBf3pEd6)
+Submit here  [Feedback Form](https://forms.gle/AX9v2hYXJpBf3pEd6)
 
 Or open an issue on GitHub.
 
