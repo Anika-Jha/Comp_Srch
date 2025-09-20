@@ -29,7 +29,7 @@ st.title("🧪 COMP_SRCH")
 st.caption("Compound search app")
 st.markdown("Search compounds and retrieve **PubChem, KEGG, HMDB, CAS identifiers**. HMDB search uses fuzzy match by default.")
 
-# ------------------------- FUNCTION TO CHECK DB STATUS (pubchem, KEGG and HMDB)-------------------------
+# ------------------------- FUNCTION TO CHECK DB STATUS-------------------------
 
 def check_db_status():
     services = {
