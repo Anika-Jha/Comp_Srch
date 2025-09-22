@@ -7,7 +7,7 @@ from kegg_lookup import reverse_lookup_kegg
 from query_pubchem import get_pubchem_data
 
 def process_batch(file_path):
-    """Process a CSV file with compound names, skipping already completed ones."""
+    
     if not os.path.exists(file_path):
         print("❌ File not found!")
         return
