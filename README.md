@@ -8,6 +8,7 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 -  Download batch results as CSV 
 -  See suggested KEGG pathways for available compounds
 -  View processing insights (accuracy, match info stats)
+-  Status check for the sites
 
 ---
 
