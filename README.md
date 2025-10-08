@@ -28,7 +28,7 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 ##  Technologies Used
 - Python
 - Streamlit
-- PubChem, KEGG, HMDB API, web scraping
+- PubChem, KEGG, HMDB APIs, web scraping
 
 
 ---
@@ -38,6 +38,7 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 - Translation fallback may fail if rate-limited
 - KEGG sometimes returns approximate matches
 - Pathway suggestions are based only on KEGG data for now
+- Not all plant libraries included
 
 ---
 
