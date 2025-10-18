@@ -14,10 +14,9 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 
 ##  Getting Started (Beta Users)
 
-1. Visit the deployed beta link:  
-    **[https://compsrch-aniadi259.streamlit.app/](#)**
 
-2. Select from:
+
+ Select from:
    -  Search single compound
    -  Upload CSV for batch processing
    -  Reverse ID lookup (KEGG / HMDB / PubChem)
@@ -42,11 +41,4 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 
 ---
 
-##  Feedback
-Found a bug or want to suggest a feature?
 
-Submit here  [Feedback Form](https://forms.gle/AX9v2hYXJpBf3pEd6)
-
-Or open an issue on GitHub.
-
----
