@@ -12,3 +12,4 @@ Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compoun
 
 ---
 
+currently prototype stremlit version 
