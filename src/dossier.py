@@ -14,4 +14,4 @@ def generate_dossier(name, ids_dict, synonyms):
     lines.append("\n Source: Comp_Srch CLI")
     lines.append("=" * 30)
     return "\n".join(lines)
-#change to CIE
+#change to CIP
