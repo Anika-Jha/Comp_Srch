@@ -1,3 +1,4 @@
+#endpoint
 from query_pubchem import get_pubchem_data
 from query_kegg import get_kegg_id
 from hmdb_test import get_hmdb_id
@@ -11,10 +12,10 @@ def process_compound(compound_name, force_fuzzy=True):
     compound_name = compound_name.strip()
 
     if compound_name in compound_cache:
-        print(f"✅ Using cached result for: {compound_name}")
+        print(f" Using cached result for: {compound_name}")
         return compound_cache[compound_name]
 
-    print(f"\n🔍 Processing {compound_name}...")
+    print(f"\n Processing {compound_name}...")
 
     # Step 1: PubChem
     pubchem = get_pubchem_data(compound_name)
