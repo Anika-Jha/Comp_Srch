@@ -23,21 +23,21 @@ def fetch_hmdb_id(compound_name):
                     return parse_hmdb_response(data, source)
                 
                 elif response.status_code == 405:
-                    print(f"❌ {source} Method Not Allowed (Check API docs)")
+                    print(f" {source} Method Not Allowed (Check API docs)")
                     break
                 
                 else:
-                    print(f"⚠️ {source} returned {response.status_code}. Retrying ({attempt+1}/3)...")
+                    print(f" {source} returned {response.status_code}. Retrying ({attempt+1}/3)...")
             
             except requests.Timeout:
-                print(f"⏳ {source} timed out. Retrying ({attempt+1}/3)...")
+                print(f" {source} timed out. Retrying ({attempt+1}/3)...")
                 time.sleep(2)
             
             except requests.RequestException as e:
-                print(f"❌ Error fetching HMDB from {source}: {e}")
+                print(f" Error fetching HMDB from {source}: {e}")
                 break  
 
-    print("❌ All sources failed. HMDB ID unavailable.")
+    print(" All sources failed. HMDB ID unavailable.")
     return None
 
 def parse_hmdb_response(response, source):
