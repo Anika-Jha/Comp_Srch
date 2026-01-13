@@ -27,7 +27,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ------------------------- HEADER -------------------------
-st.title("🧪 COMP_SRCH")
+st.title(" COMP_SRCH")
 st.caption("Compound search app")
 st.markdown("Search compounds and retrieve **PubChem, KEGG, HMDB, CAS identifiers**. HMDB search uses fuzzy match by default.")
 
@@ -54,12 +54,12 @@ def check_db_status():
         try:
             resp = requests.get(url, timeout=5)
             if resp.status_code == 200:
-                status_results.append(f"✅ {name}: Online")
+                status_results.append(f" {name}: Online")
             else:
                 explanation = explanations.get(resp.status_code, "Unknown error")
-                status_results.append(f"⚠️ {name}: HTTP {resp.status_code} ({explanation})")
+                status_results.append(f" {name}: HTTP {resp.status_code} ({explanation})")
         except Exception:
-            status_results.append(f"❌ {name}: Offline or timed out — check your internet or try later.")
+            status_results.append(f" {name}: Offline or timed out — check your internet or try later.")
 
     return status_results
 
