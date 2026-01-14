@@ -1,6 +1,6 @@
 # Comp_Srch Beta:Compound ID Search Web App
 
-Welcome to the **Beta version** of **Comp_Srch**, a streamlined chemical compound search tool that lets you:
+Welcome to the **Prototype** of **Comp_Srch**, a streamlined chemical compound search tool that lets you:
 
 -  Search compounds by name
 -  Get IDs: **PubChem, KEGG, HMDB, CAS**
