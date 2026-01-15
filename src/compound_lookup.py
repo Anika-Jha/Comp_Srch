@@ -29,7 +29,7 @@ def process_compound(compound_name, force_fuzzy=True):
     # Step 3: HMDB
     hmdb_id, hmdb_match_name = get_hmdb_id(compound_name, force_fuzzy=True)
 
-    # ✅ Clean fuzzy match formatting (if needed)
+    #  Clean fuzzy match formatting (if needed)
     if (
         hmdb_id
         and hmdb_id != "Unavailable"
