@@ -37,30 +37,30 @@ def get_hmdb_id(compound_name, force_fuzzy=True):
                             elif formatted_name.lower() in title.lower():
                                 return hmdb_id, title
                             else:
-                                print("❌ Match failed: official name does not match query.")
+                                print(" Match failed: official name does not match query.")
                                 return "Unavailable", "No match"
                         else:
-                            print(f"❌ Metabolite page error: {metab_resp.status_code}")
+                            print(f" Metabolite page error: {metab_resp.status_code}")
                             return "Unavailable", "Timeout"
                     except Exception as e:
-                        print(f"❌ Error loading metabolite page: {e}")
+                        print(f" Error loading metabolite page: {e}")
                         return "Unavailable", "Timeout"
 
                 else:
                     return "Unavailable", "No match"
 
             else:
-                print(f"❌ Bad response: {response.status_code}")
+                print(f" Bad response: {response.status_code}")
         except Exception as e:
-            print(f"⚠️ HMDB request failed on attempt {attempt+1}: {e}")
+            print(f" HMDB request failed on attempt {attempt+1}: {e}")
             backoff = 2 ** attempt + random.uniform(0.5, 2)
             time.sleep(backoff)
 
     return "Unavailable", "Failed after retries"
 
-# 🔬 For manual testing
+#  For manual testing
 if __name__ == "__main__":
-    name = input("\n🔍 Enter compound name: ")
+    name = input("\n Enter compound name: ")
     result, title = get_hmdb_id(name)
     print(f"\nResult HMDB ID: {result}")
     print(f"Match Title: {title}")
