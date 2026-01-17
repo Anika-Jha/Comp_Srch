@@ -17,7 +17,7 @@ def save_to_csv(data, append=True):
     else:
         df.to_csv(CSV_FILE, index=False)
 
-    print("📄 CSV file updated!")
+    print(" CSV file updated!")
 
 def save_to_excel(data, append=True):
     df = pd.DataFrame([data] if isinstance(data, dict) else data)
@@ -29,7 +29,7 @@ def save_to_excel(data, append=True):
     else:
         df.to_excel(EXCEL_FILE, index=False)
 
-    print("📄 Excel file updated!")
+    print(" Excel file updated!")
 
 def get_processed_compounds():
     if os.path.exists(CSV_FILE):
@@ -41,3 +41,5 @@ def get_processed_compounds():
 def log_processed_compound(compound):
     # Deprecated as we now store results row by row in save_to_csv
     pass
+
+#excel needs to fixed
