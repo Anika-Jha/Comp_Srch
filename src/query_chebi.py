@@ -12,13 +12,13 @@ def get_chebi_hmdb_id(compound_name):
     try:
         search_response = requests.get(search_url, timeout=10)
         if search_response.status_code != 200:
-            print(f"⚠️ ChEBI API Error: {search_response.status_code}")
+            print(f" ChEBI API Error: {search_response.status_code}")
             return None
 
         search_data = search_response.json()
         
         # DEBUG: Log the full response
-        print(f"🔍 DEBUG: Full ChEBI Search Response for {compound_name}: {search_data}")
+        print(f" DEBUG: Full ChEBI Search Response for {compound_name}: {search_data}")
 
         search_results = search_data.get("ListElement", [])
         if not search_results:
@@ -31,13 +31,13 @@ def get_chebi_hmdb_id(compound_name):
         entity_response = requests.get(entity_url, timeout=10)
 
         if entity_response.status_code != 200:
-            print(f"⚠️ ChEBI Entity API Error: {entity_response.status_code}")
+            print(f" ChEBI Entity API Error: {entity_response.status_code}")
             return None
 
         entity_data = entity_response.json()
         
         # DEBUG: Log the entity response
-        print(f"🔍 DEBUG: Full ChEBI Entity Response for {chebi_id}: {entity_data}")
+        print(f" DEBUG: Full ChEBI Entity Response for {chebi_id}: {entity_data}")
 
         xrefs = entity_data.get("DatabaseLinks", [])
         for xref in xrefs:
@@ -46,11 +46,11 @@ def get_chebi_hmdb_id(compound_name):
 
         return None
     except requests.RequestException as e:
-        print(f"⚠️ Error fetching HMDB from ChEBI: {e}")
+        print(f" Error fetching HMDB from ChEBI: {e}")
         return None
 
 # Example Usage
 if __name__ == "__main__":
     compound = "glucose"
     hmdb_id = get_chebi_hmdb_id(compound)
-    print(f"🔍 ChEBI HMDB ID for {compound}: {hmdb_id}")
+    print(f" ChEBI HMDB ID for {compound}: {hmdb_id}")
