@@ -16,15 +16,15 @@ def get_hmdb_from_metaboanalyst(compound_name):
         if "HMDB_ID" in data and data["HMDB_ID"]:
             return data["HMDB_ID"][0]  # Return first HMDB ID found
         
-        print(f"⚠️ No HMDB ID found for {compound_name} in MetaboAnalyst.")
+        print(f" No HMDB ID found for {compound_name} in MetaboAnalyst.")
         return None
 
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error fetching HMDB from MetaboAnalyst API: {e}")
+        print(f" Error fetching HMDB from MetaboAnalyst API: {e}")
         return None
 
 
 if __name__ == "__main__":
     compound = "glucose"
     hmdb_id = get_hmdb_from_metaboanalyst(compound)
-    print(f"🔍 MetaboAnalyst HMDB ID for {compound}: {hmdb_id}")
+    print(f" MetaboAnalyst HMDB ID for {compound}: {hmdb_id}")
