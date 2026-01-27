@@ -296,16 +296,16 @@ elif option == "🔁 Reverse ID Lookup":
 elif option == "📄 FAQ":
     st.markdown("### ❓ Frequently Asked Questions")
 
-    with st.expander("💡 What databases are used?"):
+    with st.expander(" What databases are used?"):
         st.write("This app queries PubChem, KEGG, and HMDB. HMDB uses fuzzy logic and scraping.")
 
-    with st.expander("🧪 How accurate is HMDB matching?"):
+    with st.expander(" How accurate is HMDB matching?"):
         st.write("HMDB searches can fail for long compound names or during timeouts. We apply fuzzy logic to find closest match. The closest match searched is displayed beside the HMDB ID.")
 
-    with st.expander("📥 Can I download results?"):
+    with st.expander("Can I download results?"):
         st.write("Yes, you can download single results or batch output as CSV.")
 
-    with st.expander("📊 Will I get pathway suggestions?"):
+    with st.expander(" Will I get pathway suggestions?"):
         st.write("Yes, You’ll get pathway networks and visualization for KEGG IDs.")
 
 # ------------------------- FOOTER -------------------------
