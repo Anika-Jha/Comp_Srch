@@ -42,4 +42,4 @@ def log_processed_compound(compound):
     # Deprecated as we now store results row by row in save_to_csv
     pass
 
-#excel needs to fixed
+
