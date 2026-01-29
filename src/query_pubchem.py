@@ -1,4 +1,3 @@
-#necessary imports
 import requests
 import re
 import json
@@ -42,7 +41,7 @@ def get_pubchem_data(compound_name):
         return result
 
     except requests.RequestException as e:
-        print(f"❌ Error fetching PubChem data: {e}")
+        print(f" Error fetching PubChem data: {e}")
         return result
 
 def get_pubchem_hmdb_id(cid):
@@ -55,7 +54,7 @@ def get_pubchem_hmdb_id(cid):
             data = response.json()
 
             # DEBUG: Print full API response to check for HMDB data
-            print(f"🔍 DEBUG: Full PubChem response for CID {cid}:")
+            print(f" DEBUG: Full PubChem response for CID {cid}:")
             print(json.dumps(data, indent=2))
 
             # Traverse nested sections to find HMDB ID
@@ -72,7 +71,7 @@ def get_pubchem_hmdb_id(cid):
 
         return None
     except Exception as e:
-        print(f"⚠️ Failed to fetch HMDB from PubChem: {e}")
+        print(f" Failed to fetch HMDB from PubChem: {e}")
         return None
 
 def get_smiles_from_cid(cid):
@@ -84,5 +83,6 @@ def get_smiles_from_cid(cid):
             data = response.json()
             return data["PropertyTable"]["Properties"][0]["CanonicalSMILES"]
     except Exception as e:
-        print(f"❌ Error fetching SMILES from PubChem: {e}")
+        print(f" Error fetching SMILES from PubChem: {e}")
     return ""
+
