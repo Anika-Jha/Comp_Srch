@@ -10,14 +10,14 @@ from query_pubchem import get_pubchem_data
 def process_batch(file_path):
     
     if not os.path.exists(file_path):
-        print("❌ File not found!")
+        print(" File not found!")
         return
 
     processed_compounds = get_processed_compounds()
     df = pd.read_csv(file_path, encoding="ISO-8859-1")
 
     if "Compound Name" not in df.columns:
-        print("❌ Error: CSV must contain a 'Compound Name' column.")
+        print(" Error: CSV must contain a 'Compound Name' column.")
         return
 
     compounds_to_process = []
@@ -29,7 +29,7 @@ def process_batch(file_path):
                 compounds_to_process.append(compound)
 
     if not compounds_to_process:
-        print("✅ All compounds already processed or invalid.")
+        print(" All compounds already processed or invalid.")
         return
     
 
