@@ -33,7 +33,7 @@ def process_batch(file_path):
         return
     
 
-    cache = {}  # 🔁 Store already processed results
+    cache = {}  #  Store already processed results
     for compound in compounds_to_process:
         normalized = compound.lower()
         if normalized in cache:
@@ -46,7 +46,7 @@ def process_batch(file_path):
             save_to_csv(result)
             save_to_excel(result)
             log_processed_compound(compound)
-            #print(f"✅ Processed: {compound} (HMDB Source: {result.get('HMDB_Source', 'N/A')})")
+            #print(f" Processed: {compound} (HMDB Source: {result.get('HMDB_Source', 'N/A')})")
 
 def main():
 
@@ -56,19 +56,19 @@ def main():
         # Identify HMDB source
         if result["HMDB_ID"] != "Unavailable":
             if "HMDB" in result["HMDB_ID"]:
-                hmdb_source = "✅ HMDB API"
+                hmdb_source = " HMDB API"
             elif result["PubChem_CID"] != "Not Found":
-                hmdb_source = "🟡 PubChem Fallback"
+                hmdb_source = " PubChem Fallback"
             elif result["KEGG_ID"] != "Unavailable":
-                hmdb_source = "🔹 KEGG Cross-Reference"
+                hmdb_source = " KEGG Cross-Reference"
             elif "ChEBI" in result["HMDB_ID"]:
-                hmdb_source = "🟢 ChEBI API"
+                hmdb_source = " ChEBI API"
             elif "CTS" in result["HMDB_ID"]:
-                hmdb_source = "🔻 CTS API Fallback"
+                hmdb_source = " CTS API Fallback"
             else:
-                hmdb_source = "🔍 MetaboAnalyst Scraper"
+                hmdb_source = " MetaboAnalyst Scraper"
         else:
-            hmdb_source = "❌ Not Found"
+            hmdb_source = " Not Found"
 
         result["HMDB_Source"] = hmdb_source
 
@@ -76,9 +76,10 @@ def main():
             save_to_csv(result)
             save_to_excel(result)
             log_processed_compound(compound)
-            print(f"✅ Processed: {compound} (HMDB Source: {hmdb_source})")
+            print(f" Processed: {compound} (HMDB Source: {hmdb_source})")
 
 def main():
+    #menu 
     while True:
         print("\n🔹 **Compound Search Tool** 🔹")
         print("1️⃣ Enter compound names manually")
@@ -98,19 +99,19 @@ def main():
                 # Identify HMDB source
                 if result["HMDB_ID"] != "Unavailable":
                     if "HMDB" in result["HMDB_ID"]:
-                        hmdb_source = "✅ HMDB API"
+                        hmdb_source = " HMDB API"
                     elif result["PubChem_CID"] != "Not Found":
-                        hmdb_source = "🟡 PubChem Fallback"
+                        hmdb_source = " PubChem Fallback"
                     elif result["KEGG_ID"] != "Unavailable":
-                        hmdb_source = "🔹 KEGG Cross-Reference"
+                        hmdb_source = " KEGG Cross-Reference"
                     elif "ChEBI" in result["HMDB_ID"]:
-                        hmdb_source = "🟢 ChEBI API"
+                        hmdb_source = " ChEBI API"
                     elif "CTS" in result["HMDB_ID"]:
-                        hmdb_source = "🔻 CTS API Fallback"
+                        hmdb_source = " CTS API Fallback"
                     else:
-                        hmdb_source = "🔍 MetaboAnalyst Scraper"
+                        hmdb_source = " MetaboAnalyst Scraper"
                 else:
-                    hmdb_source = "❌ Not Found"
+                    hmdb_source = " Not Found"
 
                 result["HMDB_Source"] = hmdb_source
 
@@ -118,30 +119,30 @@ def main():
                     save_to_csv(result)
                     save_to_excel(result)
                     log_processed_compound(compound)
-                    print(f"🔍 Search Result: {result}")
+                    print(f" Search Result: {result}")
 
         elif choice == "2":
-            file_path = input("📂 Enter the path to your CSV file: ").strip()
+            file_path = input(" Enter the path to your CSV file: ").strip()
             if os.path.exists(file_path):
                 process_batch(file_path)
             else:
-                print("❌ File not found!")
+                print(" File not found!")
 
         elif choice == "3":
-            kegg_id = input("🔍 Enter KEGG ID for reverse lookup: ").strip()
+            kegg_id = input(" Enter KEGG ID for reverse lookup: ").strip()
             result = reverse_lookup_kegg(kegg_id)
             print("KEGG Reverse Lookup Result:", result)
 
         elif choice == "4":
-            cid = input("🔍 Enter PubChem CID for reverse lookup: ").strip()
+            cid = input(" Enter PubChem CID for reverse lookup: ").strip()
             pubchem_result = get_pubchem_data(cid)
             print("PubChem Reverse Lookup Result:", pubchem_result)
 
         elif choice == "5":
-            print("👋 Exiting program!")
+            print(" Exiting program!")
             break
         else:
-            print("❌ Invalid choice, please select a valid option.")
+            print(" Invalid choice, please select a valid option.")
 
 if __name__ == "__main__":
     main()
