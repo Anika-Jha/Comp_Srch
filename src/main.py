@@ -96,7 +96,7 @@ def main():
                 compound = compound.strip()
                 result = process_compound(compound)
 
-                # Identify HMDB source
+                
                 if result["HMDB_ID"] != "Unavailable":
                     if "HMDB" in result["HMDB_ID"]:
                         hmdb_source = " HMDB API"
