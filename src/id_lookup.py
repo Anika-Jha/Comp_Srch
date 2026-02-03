@@ -74,6 +74,6 @@ def lookup_hmdb_by_id(hmdb_id):
             "smiles": smiles_value
         }
     except Exception as e:
-        print(f"❌ Error in HMDB lookup: {e}")
+        print(f" Error in HMDB lookup: {e}")
         return {"source": "HMDB", "hmdb_id": hmdb_id, "name": "Error", "smiles": ""}
 
