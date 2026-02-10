@@ -1,3 +1,4 @@
+#test file
 import requests
 import time
 import random
@@ -24,7 +25,7 @@ def get_hmdb_id(compound_name, force_fuzzy=True):
                     href = result_link["href"]
                     hmdb_id = href.split("/")[-1]
                     metabolite_url = f"https://hmdb.ca{href}"
-                    print(f"🔗 Metabolite URL: {metabolite_url}")
+                    print(f" Metabolite URL: {metabolite_url}")
 
                     try:
                         metab_resp = session.get(metabolite_url, timeout=15)
