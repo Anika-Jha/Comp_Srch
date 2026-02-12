@@ -51,8 +51,7 @@ def lookup_kegg_by_id(kegg_id: str) -> dict:
     result["KEGG ID"] = kegg_id
     return result
 #for hmdb
-#lookup accurate 
-#reverse working fine
+# no 8 parallel processing
 def lookup_hmdb_by_id(hmdb_id):
     url = f"https://hmdb.ca/metabolites/{hmdb_id}"
     try:
