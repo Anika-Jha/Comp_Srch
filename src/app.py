@@ -316,4 +316,5 @@ st.caption("🔬 Built with ❤️ for  metabolomics.")
 #pwa 
 #fix issues
 # change the repo struct 
+# fix the functions and api end points
 
