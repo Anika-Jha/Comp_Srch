@@ -317,4 +317,9 @@ st.caption("🔬 Built with ❤️ for  metabolomics.")
 #fix issues
 # change the repo struct 
 # fix the functions and api end points
-
+#new addons:
+#Curated compound graph
+#Inference rules
+#Confidence metrics
+#Historical usage data
+#Interpretation logic
