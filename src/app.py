@@ -137,7 +137,7 @@ if option == "🔍 Search Compound":
         # ---------------- Pathway Suggestions from KEGG ----------------
         if result.get("KEGG_ID") and result["KEGG_ID"] != "Unavailable":
             st.markdown("### 🧬 KEGG Pathways")
-            with st.spinner("🔗 Fetching related pathways..."):
+            with st.spinner(" Fetching related pathways..."):
                 pathways = get_kegg_pathways(result["KEGG_ID"])
 
             if pathways:
